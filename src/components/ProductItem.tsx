@@ -22,8 +22,9 @@ const Item = styled.div`
   align-items: center;
   border: 1px solid #D7D7D7;
   border-radius: 1rem;
-  padding: 1rem;
-  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  margin: 1rem -1rem;
+  height: 40px; 
 `;
 
 const Info = styled.div`
@@ -56,8 +57,8 @@ const Quantity = styled.span`
 
 const RemoveButton = styled.button`
   position: absolute;
-  top: -10px;  /* 카드 테두리 밖으로 약간 위로 */
-  left: -10px; /* 카드 왼쪽 테두리 밖으로 */
+  top: -10px;
+  left: -10px;
   width: 24px;
   height: 24px;
   border-radius: 50%;
