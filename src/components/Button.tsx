@@ -15,7 +15,7 @@ const StyledButton = styled.button<ButtonProps>`
   cursor: pointer;
 
   ${(props) =>
-    props.variant === "plus" &&
+    props.variant == "plus" &&
     css`
       background-color: #208D4E;
       color: white;
@@ -33,7 +33,7 @@ const StyledButton = styled.button<ButtonProps>`
     `}
 
   ${(props) =>
-    props.variant === "minus" &&
+    props.variant == "minus" &&
     css`
       background-color: #CECECE;
       color: white;
@@ -51,12 +51,12 @@ const StyledButton = styled.button<ButtonProps>`
     `}
 
     ${(props) =>
-      props.variant === "delete" &&
+      props.variant == "delete" &&
       css`
         background-color: #208D4E;
         color: white;
         width: 110px;
-        height: 45px;
+        height: 43px;
         float: right;
         border-radius: 30px;
 
@@ -66,7 +66,7 @@ const StyledButton = styled.button<ButtonProps>`
       `}
 
       ${(props) =>
-        props.variant === "pay" &&
+        props.variant == "pay" &&
         css`
           background-color: #249D57;
           color: white;
