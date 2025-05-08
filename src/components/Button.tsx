@@ -59,6 +59,7 @@ const StyledButton = styled.button<ButtonProps>`
         height: 43px;
         float: right;
         border-radius: 30px;
+        user-select: none;
 
         &:hover {
           background-color: #15803d;
