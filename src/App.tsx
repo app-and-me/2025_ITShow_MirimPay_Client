@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Cart from './pages/Cart';
 import Pay from './pages/Pay';
 import Face from './pages/Face';
+import Pin from './pages/Pin';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Cart />} />
         <Route path="/pay" element={<Pay />} />
         <Route path="/face" element={<Face />} />
+        <Route path="/pin" element={<Pin />} />
       </Routes>
     </Router>
   );
