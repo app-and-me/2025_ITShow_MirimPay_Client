@@ -4,6 +4,7 @@ import styled, { css } from "styled-components";
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "delete" | "pay" | "plus" | "minus";
   full?: boolean;
+  active?: boolean;
 }
 
 const StyledButton = styled.button<ButtonProps>`
@@ -33,22 +34,23 @@ const StyledButton = styled.button<ButtonProps>`
     `}
 
   ${(props) =>
-    props.variant == "minus" &&
-    css`
-      background-color: #CECECE;
-      color: white;
-      width: 20px;
-      height: 20px;
-      border-radius: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0;
+  props.variant === "minus" &&
+  css`
+    background-color: ${props.active ? "#208D4E" : "#CECECE"};
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
 
-      &:hover {
-        background-color: #b5b5b5;
-      }
-    `}
+    &:hover {
+      background-color: ${props.active ? "#186b3c" : "#b5b5b5"};
+    }
+  `}
+
 
     ${(props) =>
       props.variant == "delete" &&
