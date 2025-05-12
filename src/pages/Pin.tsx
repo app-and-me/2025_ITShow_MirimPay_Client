@@ -48,16 +48,15 @@ const DotContainer = styled.div`
 const Dot = styled.div<{ filled: boolean }>`
   width: 35px;
   height: 35px;
-  border-radius: 50%;
-  background-color: ${({ filled }) => (filled ? 'white' : 'transparent')};
-  border: 1px solid white;
+  border-radius: 45%;
+  background-color: ${({ filled }) => (filled ? '#414141' : 'white')};
 `;
 
 const Keypad = styled.div`
   margin-top: 150px;
   position: absolute;
   top: 50%;
-  left: 33%;
+  left: 41.5%;
   display: grid;
   grid-template-columns: repeat(3, 100px);
   gap: 10px;
