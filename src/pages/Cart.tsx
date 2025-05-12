@@ -18,9 +18,6 @@ const initialProducts: Product[] = [
   { id: 2, name: "롤리팝 아이스캔디", price: 700, quantity: 2 },
   { id: 3, name: "오리온 더 탱글 마이구미", price: 1200, quantity: 1 },
   { id: 4, name: "나나콘", price: 1200, quantity: 1 },
-  { id: 5, name: "유성윤", price: 1200, quantity: 1 },
-  { id: 6, name: "전유림", price: 1200, quantity: 1 },
-  { id: 7, name: "박준원", price: 1200, quantity: 1 },
 ];
 
 const breakpoints = {
