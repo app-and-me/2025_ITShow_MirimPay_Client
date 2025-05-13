@@ -20,8 +20,10 @@ export default function Payment() {
       <GlobalStyle />
       <Header />
       <Footer totalQuantity={totalQuantity} totalPrice={totalPrice}>
-        <Button variant="back" onClick={goBack}>이전</Button>
-        <Button variant="next" onClick={goNext}>다음</Button>
+        <div style={{ display: "flex", width: "100%", gap: "15px" }}>
+          <Button variant="back" onClick={goBack}>이전</Button>
+          <Button variant="next" onClick={goNext}>다음</Button>
+      </div>
       </Footer>
     </>
   );
