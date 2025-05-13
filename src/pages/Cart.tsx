@@ -18,6 +18,10 @@ const initialProducts: Product[] = [
   { id: 2, name: "롤리팝 아이스캔디", price: 700, quantity: 2 },
   { id: 3, name: "오리온 더 탱글 마이구미", price: 1200, quantity: 1 },
   { id: 4, name: "나나콘", price: 1200, quantity: 1 },
+  { id: 1, name: "오리온 도도한 나초 샤워크림어니언", price: 1700, quantity: 1 },
+  { id: 2, name: "롤리팝 아이스캔디", price: 700, quantity: 2 },
+  { id: 3, name: "오리온 더 탱글 마이구미", price: 1200, quantity: 1 },
+  { id: 4, name: "나나콘", price: 1200, quantity: 1 },
 ];
 
 const breakpoints = {
@@ -26,7 +30,7 @@ const breakpoints = {
 };
 
 const CartContainer = styled.div`
-  padding: 11rem 1.5rem 10rem; /* 상단 고정된 header + cart title height 고려 */
+  padding: 9rem 1.5rem 10rem;
   max-width: 100%;
   margin: 0 auto;
   user-select: none;
@@ -147,6 +151,7 @@ export default function Cart() {
 
   return (
     <>
+      <GlobalStyle />
       <Header />
   
       <CartHeader>
@@ -168,6 +173,7 @@ export default function Cart() {
         ))}
         <Footer totalQuantity={totalQuantity} totalPrice={totalPrice} />
       </CartContainer>
+      
     </>
   );
 }
