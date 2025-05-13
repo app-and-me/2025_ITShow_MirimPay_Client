@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Button from "./Button";
 
 const breakpoints = {
   sm: "640px",
@@ -30,6 +29,7 @@ const SummaryRow = styled.div`
   justify-content: space-between;
   font-size: 0.875rem;
   color: #6b7280;
+  max-width: 430px;
 `;
 
 const TotalRow = styled.div`
@@ -38,19 +38,23 @@ const TotalRow = styled.div`
   font-weight: 700;
   font-size: 1.25rem;
   color: #008C0E;
+  max-width: 430px;
 `;
+
 
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+  gap: 0.5rem;
 `;
 
 interface FooterProps {
   totalQuantity: number;
   totalPrice: number;
+  children?: React.ReactNode;
 }
 
-export default function Footer({ totalQuantity, totalPrice }: FooterProps) {
+export default function Footer({ totalQuantity, totalPrice, children }: FooterProps) {
   return (
     <CartSummary>
       <SummaryRow>
@@ -62,7 +66,7 @@ export default function Footer({ totalQuantity, totalPrice }: FooterProps) {
         <span>{totalPrice.toLocaleString()}원</span>
       </TotalRow>
       <ButtonWrapper>
-        <Button variant="pay">결제하기</Button>
+        {children}
       </ButtonWrapper>
     </CartSummary>
   );
