@@ -1,7 +1,14 @@
-import styled from "styled-components";
+// import styled from "styled-components";
 import Pinimg from '../assets/PinRecognition.png';
 import deal from '../assets/deal.svg';
 import React, { useEffect, useState } from 'react';
+import styled, { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    overflow: hidden;
+  }
+`;
 
 const PinContainer = styled.div`
   padding: 1.5rem;
@@ -56,7 +63,7 @@ const Keypad = styled.div`
   margin-top: 150px;
   position: absolute;
   top: 50%;
-  left: 41.5%;
+  left: 33%;
   display: grid;
   grid-template-columns: repeat(3, 100px);
   gap: 10px;
@@ -89,6 +96,7 @@ const EmptyBox = styled.div`
 `;
 
 const Pin: React.FC = () => {
+
   const [input, setInput] = useState('');
   const [numbers, setNumbers] = useState<string[]>([]);
 
@@ -116,33 +124,36 @@ const Pin: React.FC = () => {
   };
 
   return (
-    <PinContainer>
-      <Title>결제 비밀번호 입력</Title>
-      <Barcode src={Pinimg} alt="핀 얼굴 인식 이미지" />
-      <User_name>유*윤</User_name>
+    <>
+      <GlobalStyle />
+      <PinContainer>
+        <Title>결제 비밀번호 입력</Title>
+        <Barcode src={Pinimg} alt="핀 얼굴 인식 이미지" />
+        <User_name>유*윤</User_name>
 
-      <DotContainer>
-        {[0, 1, 2, 3].map((i) => (
-          <Dot key={i} filled={input.length > i} />
-        ))}
-      </DotContainer>
-      <Keypad>
-        {numbers.slice(0, 9).map((num) => (
-          <Button key={num} onClick={() => handleClick(num)}>
-            {num}
+        <DotContainer>
+          {[0, 1, 2, 3].map((i) => (
+            <Dot key={i} filled={input.length > i} />
+          ))}
+        </DotContainer>
+        <Keypad>
+          {numbers.slice(0, 9).map((num) => (
+            <Button key={num} onClick={() => handleClick(num)}>
+              {num}
+            </Button>
+          ))}
+          <EmptyBox />
+          <Button onClick={() => handleClick(numbers[9])}>
+            {numbers[9]}
           </Button>
-        ))}
-        <EmptyBox />
-        <Button onClick={() => handleClick(numbers[9])}>
-          {numbers[9]}
-        </Button>
 
-        {/* 지우기 버튼: 숫자 없이 이미지만 보이게 */}
-        <DeleteButton onClick={handleDelete}>
-          <img src={deal} alt="지우기" style={{ width: '40px', height: '40px' }} />
-        </DeleteButton>
-      </Keypad>
-    </PinContainer>
+          {/* 지우기 버튼: 숫자 없이 이미지만 보이게 */}
+          <DeleteButton onClick={handleDelete}>
+            <img src={deal} alt="지우기" style={{ width: '40px', height: '40px' }} />
+          </DeleteButton>
+        </Keypad>
+      </PinContainer>
+    </>
   );
 };
 
