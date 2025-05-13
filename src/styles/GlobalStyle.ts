@@ -1,6 +1,15 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
+
+  ::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+    display: none;
+  }
+
+  overflow-y: scroll;
+
   *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -8,8 +17,8 @@ const GlobalStyles = createGlobalStyle`
   }
 
   html {
-    margin: 0;
-    padding: 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
   body {
@@ -125,5 +134,5 @@ const GlobalStyles = createGlobalStyle`
     font-display: swap;
   }
 `;
-
+    
 export default GlobalStyles;
