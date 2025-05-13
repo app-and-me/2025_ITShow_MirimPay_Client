@@ -5,6 +5,7 @@ import Cart from './pages/Cart';
 import Pay from './pages/Pay';
 import Face from './pages/Face';
 import Pin from './pages/Pin';
+import Payment from './pages/Payment';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/pay" element={<Pay />} />
         <Route path="/face" element={<Face />} />
         <Route path="/pin" element={<Pin />} />
+        <Route path="/payment" element={<Payment />} />
       </Routes>
     </Router>
   );
