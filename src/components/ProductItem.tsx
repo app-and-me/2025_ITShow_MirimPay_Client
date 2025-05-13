@@ -72,9 +72,6 @@ const RemoveButton = styled.button`
   justify-content: center;
 `;
 
-
-
-
 const ProductItem: React.FC<Props> = ({ product, onQuantityChange, onRemove }) => {
   return (
     <Item>
