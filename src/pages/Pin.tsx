@@ -63,11 +63,17 @@ const Keypad = styled.div`
   margin-top: 150px;
   position: absolute;
   top: 50%;
-  left: 33%;
+  left: 41.5%;
   display: grid;
   grid-template-columns: repeat(3, 100px);
   gap: 10px;
 `;
+
+const KepadWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  
+`
 
 const Button = styled.button`
   width: 60px;
@@ -136,22 +142,24 @@ const Pin: React.FC = () => {
             <Dot key={i} filled={input.length > i} />
           ))}
         </DotContainer>
-        <Keypad>
-          {numbers.slice(0, 9).map((num) => (
-            <Button key={num} onClick={() => handleClick(num)}>
-              {num}
+        <KepadWrapper>
+          <Keypad>
+            {numbers.slice(0, 9).map((num) => (
+              <Button key={num} onClick={() => handleClick(num)}>
+                {num}
+              </Button>
+            ))}
+            <EmptyBox />
+            <Button onClick={() => handleClick(numbers[9])}>
+              {numbers[9]}
             </Button>
-          ))}
-          <EmptyBox />
-          <Button onClick={() => handleClick(numbers[9])}>
-            {numbers[9]}
-          </Button>
 
-          {/* 지우기 버튼: 숫자 없이 이미지만 보이게 */}
-          <DeleteButton onClick={handleDelete}>
-            <img src={deal} alt="지우기" style={{ width: '40px', height: '40px' }} />
-          </DeleteButton>
-        </Keypad>
+            {/* 지우기 버튼: 숫자 없이 이미지만 보이게 */}
+            <DeleteButton onClick={handleDelete}>
+              <img src={deal} alt="지우기" style={{ width: '40px', height: '40px' }} />
+            </DeleteButton>
+          </Keypad>
+        </KepadWrapper>
       </PinContainer>
     </>
   );
