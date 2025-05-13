@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "delete" | "pay" | "plus" | "minus";
+  variant?: "delete" | "pay" | "plus" | "minus" | "next" | "back";
   full?: boolean;
   active?: boolean;
 }
@@ -70,6 +70,39 @@ const StyledButton = styled.button<ButtonProps>`
 
       ${(props) =>
         props.variant == "pay" &&
+        css`
+          background-color: #249D57;
+          color: white;
+          width: 120px;
+          height: 40px;
+          float: right;
+          border-radius: 10px;
+          font-size: 15px;
+
+          &:hover {
+            background-color: #15803d;
+          }
+
+      `}
+
+      ${(props) =>
+        props.variant == "next" &&
+        css`
+          background-color: #249D57;
+          color: white;
+          width: 120px;
+          height: 40px;
+          float: right;
+          border-radius: 10px;
+
+          &:hover {
+            background-color: #15803d;
+          }
+
+      `}
+
+      ${(props) =>
+        props.variant == "back" &&
         css`
           background-color: #249D57;
           color: white;
