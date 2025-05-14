@@ -1,5 +1,12 @@
-import styled from "styled-components";
+// import styled from "styled-components";
 import barcondeimg from '../assets/barcode.png';
+import styled, { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    overflow: hidden;
+  }
+`;
 
 const PayContainer = styled.div`
   padding: 1.5rem;
@@ -54,13 +61,16 @@ const Button = styled.div`
 `
 export default function Pay() {
   return (
-    <PayContainer>
-      <Title>바코드 스캔중</Title>
-      <Barcode src={barcondeimg} alt="로고" />
-      <SubTitle>파이보 입 부분에<br></br>바코드를 스캔해주세요!</SubTitle>
-      <Wrapper>
-        <Button>취소</Button>
-      </Wrapper>
-    </PayContainer>
+    <>
+      <GlobalStyle />
+      <PayContainer>
+        <Title>바코드 스캔중</Title>
+        <Barcode src={barcondeimg} alt="로고" />
+        <SubTitle>파이보 입 부분에<br></br>바코드를 스캔해주세요!</SubTitle>
+        <Wrapper>
+          <Button>취소</Button>
+        </Wrapper>
+      </PayContainer>
+    </>
   )
 }   

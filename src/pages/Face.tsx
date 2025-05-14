@@ -1,5 +1,12 @@
-import styled from "styled-components";
+// import styled from "styled-components";
 import FaceCircleimg from '../assets/FaceRecognition.png';
+import styled, { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    overflow: hidden;
+  }
+`;
 
 const FaceContainer = styled.div`
   padding: 1.5rem;
@@ -61,15 +68,18 @@ const Button = styled.div`
 `
 export default function Face() {
   return (
-    <FaceContainer>
-      <Title>얼굴 인식중</Title>
-      <Face_Wrapper>
-        <FaceCircle src={FaceCircleimg} alt="얼굴인식" />
-      </Face_Wrapper>
-      <SubTitle>정면을 바라보고<br></br>인식을 기다려 주세요!</SubTitle>
-      <Wrapper>
-        <Button>취소</Button>
-      </Wrapper>
-    </FaceContainer>
+    <>
+      <GlobalStyle />
+      <FaceContainer>
+        <Title>얼굴 인식중</Title>
+        <Face_Wrapper>
+          <FaceCircle src={FaceCircleimg} alt="얼굴인식" />
+        </Face_Wrapper>
+        <SubTitle>정면을 바라보고<br></br>인식을 기다려 주세요!</SubTitle>
+        <Wrapper>
+          <Button>취소</Button>
+        </Wrapper>
+      </FaceContainer>
+    </>
   )
 }   
