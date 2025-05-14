@@ -17,6 +17,7 @@ const CartSummary = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  user-select: none;
 
   @media (min-width: ${breakpoints.sm}) {
     max-width: 28rem;
