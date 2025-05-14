@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import Header from "../components/Header";
 import Button from "../components/Button";
@@ -18,9 +19,6 @@ const initialProducts: Product[] = [
   { id: 2, name: "롤리팝 아이스캔디", price: 700, quantity: 2 },
   { id: 3, name: "오리온 더 탱글 마이구미", price: 1200, quantity: 1 },
   { id: 4, name: "나나콘", price: 1200, quantity: 1 },
-  { id: 5, name: "유성윤", price: 1200, quantity: 1 },
-  { id: 6, name: "전유림", price: 1200, quantity: 1 },
-  { id: 7, name: "박준원", price: 1200, quantity: 1 },
 ];
 
 const breakpoints = {
@@ -29,7 +27,7 @@ const breakpoints = {
 };
 
 const CartContainer = styled.div`
-  padding: 11rem 1.5rem 10rem; /* 상단 고정된 header + cart title height 고려 */
+  padding: 10rem 1.5rem 10rem;
   max-width: 100%;
   margin: 0 auto;
   user-select: none;
@@ -98,6 +96,7 @@ const CartTitle = styled.h1`
   font-weight: 600;
   line-height: 1.4;
   user-select: none;
+  padding: 1rem;
 
   @media (min-width: ${breakpoints.sm}) {
     font-size: 1.3rem;
@@ -125,8 +124,18 @@ const CartHeader = styled.div`
     margin: 0 auto;
   }
 `;
-
 export default function Cart() {
+  const navigate = useNavigate();
+
+  const goToPayment = () => {
+    navigate("/payment", {
+      state: {
+        totalQuantity,
+        totalPrice,
+      },
+    });
+  };
+
   const [products, setProducts] = useState<Product[]>(initialProducts);
 
   const handleQuantityChange = (id: number, delta: number) => {
@@ -150,15 +159,16 @@ export default function Cart() {
 
   return (
     <>
+      <GlobalStyle />
       <Header />
-  
+
       <CartHeader>
         <CartTitle>리더기에 바코드를 찍어 주세요</CartTitle>
         <Button variant="delete" onClick={handleClearAll}>
           상품 전체 삭제
         </Button>
       </CartHeader>
-  
+
       <CartContainer>
         {products.map(product => (
           <ProductWrapper key={product.id}>
@@ -169,7 +179,9 @@ export default function Cart() {
             />
           </ProductWrapper>
         ))}
-        <Footer totalQuantity={totalQuantity} totalPrice={totalPrice} />
+        <Footer totalQuantity={totalQuantity} totalPrice={totalPrice}>
+          <Button variant="pay" onClick={goToPayment}>결제하기</Button>
+        </Footer>
       </CartContainer>
     </>
   );

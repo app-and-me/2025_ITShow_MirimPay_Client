@@ -2,8 +2,9 @@ import React from "react";
 import styled, { css } from "styled-components";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "delete" | "pay" | "plus" | "minus";
+  variant?: "delete" | "pay" | "plus" | "minus" | "next" | "back";
   full?: boolean;
+  $active?: boolean;
 }
 
 const StyledButton = styled.button<ButtonProps>`
@@ -33,51 +34,82 @@ const StyledButton = styled.button<ButtonProps>`
     `}
 
   ${(props) =>
-    props.variant == "minus" &&
+  props.variant === "minus" &&
+  css`
+    background-color: ${props.$active ? "#208D4E" : "#CECECE"};
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+
+    &:hover {
+      background-color: ${props.$active ? "#186b3c" : "#b5b5b5"};
+    }
+  `}
+
+
+  ${(props) =>
+    props.variant == "delete" &&
     css`
-      background-color: #CECECE;
+      background-color: #208D4E;
       color: white;
-      width: 20px;
-      height: 20px;
-      border-radius: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0;
+      width: 110px;
+      height: 43px;
+      float: right;
+      border-radius: 30px;
+      user-select: none;
 
       &:hover {
-        background-color: #b5b5b5;
+        background-color: #15803d;
       }
     `}
 
-    ${(props) =>
-      props.variant == "delete" &&
+  ${(props) =>
+      props.variant == "pay" &&
       css`
-        background-color: #208D4E;
+        background-color: #249D57;
         color: white;
-        width: 110px;
-        height: 43px;
+        width: 150px;
+        height: 50px;
         float: right;
-        border-radius: 30px;
+        border-radius: 15px;
+        font-size: 18px;
+
+        &:hover {
+          background-color: #15803d;
+        }
+    `}
+
+  ${(props) =>
+      props.variant == "next" &&
+      css`
+        background-color: #208D4E ;
+        color: white;
+        width: 450px;
+        height: 50px;
+        float: right;
+        border-radius: 15px;          
+        font-size: 18px;
 
         &:hover {
           background-color: #15803d;
         }
       `}
 
-      ${(props) =>
-        props.variant == "pay" &&
-        css`
-          background-color: #249D57;
-          color: white;
-          width: 120px;
-          height: 40px;
-          float: right;
-          border-radius: 10px;
-
-          &:hover {
-            background-color: #15803d;
-          }
+  ${(props) =>
+      props.variant == "back" &&
+      css`
+        background-color: #D0D0D0;
+        color: black;
+        width: 450px;
+        height: 50px;
+        float: left;
+        border-radius: 15px;
+        font-size: 18px;
 
       `}
 

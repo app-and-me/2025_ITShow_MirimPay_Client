@@ -72,9 +72,6 @@ const RemoveButton = styled.button`
   justify-content: center;
 `;
 
-
-
-
 const ProductItem: React.FC<Props> = ({ product, onQuantityChange, onRemove }) => {
   return (
     <Item>
@@ -86,14 +83,22 @@ const ProductItem: React.FC<Props> = ({ product, onQuantityChange, onRemove }) =
       </Info>
 
       <Controls>
-        <Button variant="minus" onClick={() => onQuantityChange(product.id, -1)}>
-          -
-        </Button>
-        <Quantity>{product.quantity}</Quantity>
-        <Button variant="plus" onClick={() => onQuantityChange(product.id, 1)}>
-          +
-        </Button>
-      </Controls>
+  <Button
+    variant="minus"
+    onClick={() => onQuantityChange(product.id, -1)}
+    $active={product.quantity >= 2}
+  >
+    -
+  </Button>
+  <Quantity>{product.quantity}</Quantity>
+  <Button
+    variant="plus"
+    onClick={() => onQuantityChange(product.id, 1)}
+  >
+    +
+  </Button>
+</Controls>
+
     </Item>
   );
 };
