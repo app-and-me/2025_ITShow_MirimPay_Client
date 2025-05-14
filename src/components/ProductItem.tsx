@@ -86,7 +86,7 @@ const ProductItem: React.FC<Props> = ({ product, onQuantityChange, onRemove }) =
   <Button
     variant="minus"
     onClick={() => onQuantityChange(product.id, -1)}
-    active={product.quantity >= 2}
+    $active={product.quantity >= 2}
   >
     -
   </Button>
