@@ -12,7 +12,7 @@ export default function Payment() {
 
   const goBack = () => navigate(-1);
   const goNext = () => {
-    alert("다음 단계로 이동"); // 원하는 동작으로 바꿔도 됨
+    alert("다음 단계로 이동"); // 원하는 동작으로
   };
 
   return (
@@ -20,10 +20,8 @@ export default function Payment() {
       <GlobalStyle />
       <Header />
       <Footer totalQuantity={totalQuantity} totalPrice={totalPrice}>
-        <div style={{ display: "flex", width: "100%", gap: "15px" }}>
-          <Button variant="back" onClick={goBack}>이전</Button>
-          <Button variant="next" onClick={goNext}>다음</Button>
-      </div>
+        <Button variant="back" onClick={goBack}>이전</Button>
+        <Button variant="next" onClick={goNext}>다음</Button>
       </Footer>
     </>
   );
