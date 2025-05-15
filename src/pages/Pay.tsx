@@ -1,6 +1,7 @@
 // import styled from "styled-components";
 import barcondeimg from '../assets/barcode.png';
 import styled, { createGlobalStyle } from 'styled-components';
+import { useNavigate } from 'react-router-dom'; 
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -60,6 +61,9 @@ const Button = styled.div`
 
 `
 export default function Pay() {
+  const navigate = useNavigate();
+  const goBack = () => navigate('/Payment');
+  
   return (
     <>
       <GlobalStyle />
@@ -68,7 +72,7 @@ export default function Pay() {
         <Barcode src={barcondeimg} alt="로고" />
         <SubTitle>파이보 입 부분에<br></br>바코드를 스캔해주세요!</SubTitle>
         <Wrapper>
-          <Button>취소</Button>
+          <Button onClick={goBack}>취소</Button>
         </Wrapper>
       </PayContainer>
     </>
