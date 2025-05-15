@@ -1,6 +1,7 @@
-// import styled from "styled-components";
-import FaceCircleimg from '../assets/FaceRecognition.png';
-import styled, { createGlobalStyle } from 'styled-components';
+import React from 'react'
+import Webcam from 'react-webcam'
+import styled, { createGlobalStyle } from 'styled-components'
+
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -8,78 +9,99 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const FaceContainer = styled.div`
+const Container = styled.div`
   padding: 1.5rem;
   padding-bottom: 7rem;
   max-width: 28rem;
   margin: 0 auto;
   background-color: #008C0E;
-`
+`;
 
-const Title = styled.p`
+const Title = styled.h2`
   text-align: center;
   font-size: 25px;
   color: white;
   -webkit-text-stroke: 0.8px white;
-  margin-top: 80px;
-  padding-bottom: 3rem;
+  margin-top: 70px;
+  margin-bottom: 45px;
+`
+const Camerabox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `
 
-const Face_Wrapper = styled.div`
-  text-align: center;
-`
-
-const FaceCircle = styled.img`
-  padding-bottom: 25rem;
-  width: 230px;
-  max-width: 31rem;
-  display: block;
-  margin-top: 45px;
-  align-item: center; 
-  display: block;
-  margin: 0 auto;
-`
-
-const SubTitle = styled.div`
-  margin-top: -150px;  
-  text-align: center;
-  font-size: 1.2rem;
-  color: white;
-  -webkit-text-stroke: 0.8px white;
-`
-const Wrapper = styled.div`
+const CameraWrapper = styled.div`
+  margin-top: 5%; 
+  margin-bottom: 30%;
+  width: 210px;
+  height: 210px;
+  border-radius: 50%;
+  border: 4px double white;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
 `
-const Button = styled.div`
-  display: flex;
+
+const StyledWebcam = styled(Webcam)`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`
+
+const Subtitle = styled.div`
+  color: white;
+  text-align: center;
+  font-size: 1.3rem;
+  margin-top: 100px;
+  -webkit-text-stroke: 0.4px white;
+  line-height: 1.6;
+`
+const Button = styled.button`
+  margin: 40px auto 0 auto; 
+  margin-top: 40px;
   width: 350px;
   height: 60px;
+  border-radius: 12px;
+  border: 2px solid white;
+  background-color: white;
+  color: black;
+  font-size: 1.1rem;
+  cursor: pointer;
+    display: flex;
   justify-content: center;
   align-items: center;
-  margin-top:45px;
-  border-radius: 10px;
-  border: 2px solid #FFF;
-  background: #FFF;
-  color: black;
-  -webkit-text-stroke: 0.4px black;
-
 `
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`
+
 export default function Face() {
   return (
     <>
       <GlobalStyle />
-      <FaceContainer>
-        <Title>얼굴 인식중</Title>
-        <Face_Wrapper>
-          <FaceCircle src={FaceCircleimg} alt="얼굴인식" />
-        </Face_Wrapper>
-        <SubTitle>정면을 바라보고<br></br>인식을 기다려 주세요!</SubTitle>
-        <Wrapper>
+      <Container>
+        <Title>얼굴 인식 중</Title>
+        <Camerabox>
+          <CameraWrapper>
+            <StyledWebcam
+              audio={false}
+              mirrored={true}
+              screenshotFormat="image/jpeg"
+              videoConstraints={{
+                facingMode: "user",
+              }}
+            />
+          </CameraWrapper>
+        </Camerabox>
+        <Subtitle>정면을 바라보고<br />인식을 기다려 주세요!</Subtitle>
+        <ButtonWrapper>
           <Button>취소</Button>
-        </Wrapper>
-      </FaceContainer>
+        </ButtonWrapper>
+      </Container>
     </>
   )
-}   
+}
