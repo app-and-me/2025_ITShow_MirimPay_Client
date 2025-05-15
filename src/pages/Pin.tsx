@@ -4,6 +4,7 @@ import deal from '../assets/deal.svg';
 import React, { useEffect, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 
+
 const GlobalStyle = createGlobalStyle`
   body {
     overflow: hidden;
