@@ -73,7 +73,7 @@ export default function Payment() {
   const navigate = useNavigate();
   const { totalQuantity, totalPrice } = location.state || { totalQuantity: 0, totalPrice: 0 };
 
-  const [selectedMethod, setSelectedMethod] = useState<'pay' | 'face' | null>(null);
+  const [selectedMethod, setSelectedMethod] = useState<'pay' | 'face' | null>('pay');
 
   const goBack = () => navigate(-1);
 

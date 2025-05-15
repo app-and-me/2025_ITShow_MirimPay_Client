@@ -1,6 +1,8 @@
 import React from 'react'
 import Webcam from 'react-webcam'
 import styled, { createGlobalStyle } from 'styled-components'
+import { useNavigate } from 'react-router-dom'; 
+
 
 
 const GlobalStyle = createGlobalStyle`
@@ -80,6 +82,8 @@ const ButtonWrapper = styled.div`
 `
 
 export default function Face() {
+  const navigate = useNavigate();
+  const goBack = () => navigate('/Payment');
   return (
     <>
       <GlobalStyle />
@@ -99,7 +103,7 @@ export default function Face() {
         </Camerabox>
         <Subtitle>정면을 바라보고<br />인식을 기다려 주세요!</Subtitle>
         <ButtonWrapper>
-          <Button>취소</Button>
+          <Button onClick={goBack}>취소</Button>
         </ButtonWrapper>
       </Container>
     </>
