@@ -7,6 +7,7 @@ import Pay from './pages/Pay';
 import Face from './pages/Face';
 import Pin from './pages/Pin';
 import Successful from './pages/ Successful';
+import Main from './pages/Main';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/face" element={<Face />} />
         <Route path="/pin" element={<Pin />} />
         <Route path="/successful" element={<Successful />} />
+        <Route path="/main" element={<Main />} />
       </Routes>
     </Router>
   );

@@ -75,7 +75,7 @@ export default function Payment() {
 
   const [selectedMethod, setSelectedMethod] = useState<'pay' | 'face' | null>('pay');
 
-  const goBack = () => navigate(-1);
+  const goBack = () => navigate('/');
 
   const goNext = () => {
     if (!selectedMethod) {
