@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  react-app:
+    build: .
+    container_name: mirim_pay
+    restart: always
+    ports:
+      - "${PORT:-443}:${PORT:-443}"
+    volumes:
+      - .:/app
+    command: yarn dev --host --port 443
