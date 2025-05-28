@@ -11,6 +11,6 @@ RUN mv node_modules ../
 
 COPY . .
 
-EXPOSE 443
+EXPOSE 2095
 
 CMD ["yarn", "dev"]

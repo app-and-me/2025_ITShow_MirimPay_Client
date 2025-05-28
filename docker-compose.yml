@@ -6,7 +6,7 @@ services:
     container_name: mirim_pay
     restart: always
     ports:
-      - "${PORT:-443}:${PORT:-443}"
+      - "${PORT:-2095}:${PORT:-2095}"
     volumes:
       - .:/app
-    command: yarn dev --host --port 443
+    command: yarn dev --host --port 2095
