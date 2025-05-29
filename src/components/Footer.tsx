@@ -18,11 +18,7 @@ const CartSummary = styled.div`
   flex-direction: column;
   gap: 1rem;
   user-select: none;
-
-  @media (min-width: ${breakpoints.sm}) {
-    max-width: 28rem;
-    margin: 0 auto;
-  }
+  box-sizing: border-box;
 `;
 
 const SummaryRow = styled.div`
@@ -30,7 +26,7 @@ const SummaryRow = styled.div`
   justify-content: space-between;
   font-size: 0.875rem;
   color: #6b7280;
-  max-width: 430px;
+  width: 100%;
 `;
 
 const TotalRow = styled.div`
@@ -39,7 +35,7 @@ const TotalRow = styled.div`
   font-weight: 700;
   font-size: 1.25rem;
   color: #008C0E;
-  max-width: 430px;
+    box-sizing: border-box;
 `;
 
 

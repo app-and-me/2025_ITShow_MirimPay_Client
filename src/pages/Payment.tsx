@@ -5,37 +5,37 @@ import Button from "../components/Button";
 import Footer from "../components/Footer";
 import BarcodeIcon from "../components/BarcodeIcon";
 import FaceIcon from "../components/FaceIcon";
-
-
 import GlobalStyle from "../styles/GlobalStyle";
 import styled from "styled-components";
-
-import barcodeIcon from "../assets/barcode-icon.svg";
-import faceIcon from "../assets/face-icon.svg";
-
 
 const Main = styled.div`
   padding: 40px 20px;
 `;
 
 const Wrapper = styled.div`
-  padding: 3.5rem 2rem 12rem;
-  max-width: 100%;
+  padding: 2rem 2rem;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  width: 100%;
   margin: 0 auto;
   user-select: none;
   overflow-x: hidden;
-  max-width: 25rem;
+  box-sizing: border-box;
+  z-index: 999;
 `;
 
 const TitleWrapper = styled.div`
   margin-bottom: 2rem;
 `;
 
-const Title = styled.h2`
-  fint-weight: 600;
-  font-size: 1.3rem;
+const Title = styled.h1`
+  font-weight: 600;
+  font-size: 1.5rem;
   margin-bottom: 8px;
   text-align: left;
+  user-select: none;
 `;
 
 const Subtitle = styled.p`
@@ -48,6 +48,7 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 30px;
+  flex-wrap: wrap;
 `;
 
 const MethodButton = styled.button<{ selected: boolean }>`
@@ -55,17 +56,17 @@ const MethodButton = styled.button<{ selected: boolean }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  width: 150px;
-  height: 150px;
-  border-radius: 16px;
+  padding: 24px;
+  width: 200px;
+  height: 200px;
+  border-radius: 20px;
   border: 2px solid ${({ selected }) => (selected ? "#208D4E" : "#ccc")};
   background-color: #fff;
   color: ${({ selected }) => (selected ? "#208D4E" : "#000")};
-  font-size: 16px;
+  font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-
+  transition: all 0.2s ease-in-out;
 `;
 
 export default function Payment() {
@@ -78,11 +79,6 @@ export default function Payment() {
   const goBack = () => navigate('/');
 
   const goNext = () => {
-    if (!selectedMethod) {
-      alert("결제 수단을 선택해주세요.");
-      return;
-    }
-
     if (selectedMethod === 'pay') {
       navigate('/pay', { state: { totalQuantity, totalPrice } });
     } else if (selectedMethod === 'face') {
@@ -107,28 +103,23 @@ export default function Payment() {
               selected={selectedMethod === 'pay'}
               onClick={() => setSelectedMethod('pay')}
             >
-              <div style={{ marginBottom: '40px' }}>
+              <div style={{ marginBottom: '24px' }}>
                 <BarcodeIcon selected={selectedMethod === 'pay'} />
               </div>
-                페이
+              페이
             </MethodButton>
 
             <MethodButton
               selected={selectedMethod === 'face'}
               onClick={() => setSelectedMethod('face')}
             >
-              <div style={{ marginBottom: '40px' }}>
+              <div style={{ marginBottom: '24px' }}>
                 <FaceIcon selected={selectedMethod === 'face'} />
               </div>
               얼굴 인식
             </MethodButton>
-              
-
           </ButtonContainer>
         </Wrapper>
-        
-        
-
       </Main>
 
       <Footer totalQuantity={totalQuantity} totalPrice={totalPrice}>

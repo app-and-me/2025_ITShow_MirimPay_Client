@@ -15,12 +15,8 @@ const HeaderContainer = styled.header`
   padding: 0 0.5rem;
   border-bottom: 1px solid #808080;
   user-drag: none;
-
-
-  @media (min-width: 640px) {
-    margin: 0 auto;
-    max-width: 28rem;
-  }
+  width: 100%;                
+  box-sizing: border-box;    
 `;
 
 const Logo = styled.img`
