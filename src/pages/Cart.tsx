@@ -28,15 +28,13 @@ const breakpoints = {
 
 const CartContainer = styled.div`
   padding: 10rem 1.5rem 10rem;
-  max-width: 100%;
+  width: 100%;
   margin: 0 auto;
   user-select: none;
   overflow-x: hidden;
-
-  @media (min-width: ${breakpoints.sm}) {
-    max-width: 28rem;
-  }
+  box-sizing: border-box;
 `;
+
 
 const ProductWrapper = styled.div`
   margin: 0 1rem;
@@ -54,11 +52,6 @@ const CartSummary = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-
-  @media (min-width: ${breakpoints.sm}) {
-    max-width: 28rem;
-    margin: 0 auto;
-  }
 `;
 
 const SummaryRow = styled.div`
@@ -84,24 +77,19 @@ const CartHeaderWrapper = styled.div`
   padding: 1rem;
   overflow-x: hidden;
 
-  @media (min-width: ${breakpoints.sm}) {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  @media screen and (orientation: portrait) {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 10rem 1rem 10rem;
   }
 `;
 
 const CartTitle = styled.h1`
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   font-weight: 600;
   line-height: 1.4;
   user-select: none;
   padding: 1rem;
-
-  @media (min-width: ${breakpoints.sm}) {
-    font-size: 1.3rem;
-    line-height: 40px;
-  }
 `;
 
 const CartHeader = styled.div`
@@ -115,14 +103,10 @@ const CartHeader = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;  
-
-  @media (min-width: ${breakpoints.sm}) {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 28rem;
-    margin: 0 auto;
-  }
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
 `;
 export default function Cart() {
   const navigate = useNavigate();
