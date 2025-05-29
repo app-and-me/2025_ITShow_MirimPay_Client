@@ -2,14 +2,13 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import GlobalStyle from '../styles/GlobalStyle';
-import MainImage from '../assets/Main.png'; // 이미지 경로 임포트
+import MainImage from '../assets/Main.png';
 
 const Container = styled.div`
-    width: 100%;
-    max-width: 28rem;
+    width: 100vw;
     height: 100vh;
-    margin: 0 auto;
-    padding: 10rem 1.5rem 5rem;
+    margin: 0;
+    padding: 0;
     background-image: url(${MainImage});
     background-size: cover;
     background-position: center;
@@ -17,13 +16,15 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    align-items: center;
     box-sizing: border-box;
 `;
 
 const ButtonWrapper = styled.div`
+    width: 100%;
+    padding: 3rem;
     display: flex;
     justify-content: center;
-    align-items: center;
 `;
 
 const Button = styled.button`
