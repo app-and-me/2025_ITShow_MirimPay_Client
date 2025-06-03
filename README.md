@@ -1,54 +1,97 @@
-# React + TypeScript + Vite
+<div align="center">
+  <h1>MIRIM PAY</h1>
+  <p>MIRIMPAY는 미림마이스터고 교내 매점을 더 편리하게 사용하기 위한 키오스크 및 앱 서비스입니다. </p>
+  <p>
+    <a href="https://github.com/app-and-me/2025_ITShow_MirimPay_Client.git">
+      <img src="https://img.shields.io/badge/GitHub-Frontend-38C172?style=flat-square&logo=github" alt="GitHub Frontend" />
+    </a>
+    <a href="https://github.com/app-and-me/2025_ITShow_MirimPay_Server.git">
+      <img src="https://img.shields.io/badge/GitHub-Backend-249D57?style=flat-square&logo=github" alt="GitHub Backend" />
+    </a>
+    <a href="https://github.com/app-and-me/2025_ITShow_MirimPay_Mobile.git">
+      <img src="https://img.shields.io/badge/GitHub-Mobile-1d7e46?style=flat-square&logo=github" alt="GitHub Mobile" />
+    </a>
+  </p>
+</div>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+</br>
+</br>
 
-Currently, two official plugins are available:
+## 🧾 Project Overview (프로젝트 개요)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**MIRIMPAY**는 미림마이스터고의 교내 매점 무인 결제 시스템입니다. </br>
+앱에서 카드를 등록한 후, 키오스크 내에서 QR 코드를 사용하거나 얼굴 인식만을 이용해 휴대폰이 없더라도 간편히 결제할 수 있습니다. </br>
+MIRIMPAY를 통해 교내 소비 환경을 한층 효율적으로 개선합니다. </br>
 
-## Expanding the ESLint configuration
+</br>
+</br>
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 👥 Team Members (팀원 및 팀 소개)
+<sub>개발과는 깃허브 링크, 디자인과는 인스타 링크로 대체합니다.</sub>
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+<details open>
+  <summary><b>앱앤미 13기</b></summary>
+    <div markdown="1">
+      <ul>
+        <li><a href="https://github.com/cuzurmyhabit">지수민</a> - Front</li>
+        <li><a href="https://github.com/Hyotaccato">이효은</a> - Front</li>
+        <li><a href="https://github.com/jaehokang1007">강재호</a> - Back</li>
+        <li><a href="https://github.com/3x-haust">유성윤</a> - Full Stack, AI</li>
+        <li><a href="https://www.instagram.com/soo_g81">송지아</a> - Design</li>
+        <li><a href="https://www.instagram.com/zush.ol">이서현</a> - Design</li>
+      </ul>
+    </div>
+</details>
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+</br>
+</br>
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## 🛠️ Tech Stack (기술 스택)
+### Front
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white) 
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Styled Components](https://img.shields.io/badge/StyledComponents-ffffff?style=for-the-badge&logo=StyledComponents&logoColor=pink)
+
+### Back
+![NestJS](https://img.shields.io/badge/NestJS-3a464b?style=for-the-badge&logo=NestJS&logoColor=red) 
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white) 
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=yellow) 
+![RaspberryPi](https://img.shields.io/badge/RaspberryPi-B81141?style=for-the-badge&logo=RaspberryPi&logoColor=white) 
+
+### Cooperation
+![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white) 
+![Notion](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white)
+
+</br>
+</br>
+
+## 📱 Key Features (주요 기능)
+- **미림마이스터고 계정 기반 로그인** :
+  - 사용자는 별도의 회원 가입 없이 미림마이스터고 통합 계정을 통해 간편하게 로그인할 수 있습니다. 학교 구성원 인증 절차를 거쳐 보안성과 편의성을 동시에 확보하였습니다.
+
+- **결제 수단 등록 및 간편 결제 기능** :
+  - 사용자는 본인의 체크카드를 앱 내에 등록할 수 있습니다.
+  - 카드 등록 후에는 키오스크에서 QR코드 스캔 또는 얼굴 인식 기능을 통해 빠르고 간편하게 결제를 진행할 수 있습니다.
+  - 다른 결제 수단 없이 얼굴 인식만으로 결제할 수 있어 이용자의 편의를 극대화하였습니다.
+
+- **실시간 재고 조회** :
+  - 현재 남아 있는 상품의 수량을 실시간으로 확인할 수 있습니다.
+  - 카테고리별로 상품이 정리되어 있으며, 원하는 항목을 직관적으로 검색하고 빠르게 파악할 수 있도록 구성되어 있습니다.
+
+- **간편 문의 및 답변 서비스** :
+ - 매점 이용 도중 궁금한 점이나 불편한 사항이 생겼을 경우, 앱 내 문의 기능을 통해 간편하게 질문을 남길 수 있습니다.
+ - 접수된 문의는 관리자에게 실시간으로 전달되며, 빠르고 정확한 답변을 받을 수 있습니다. 
+
+ </br>
+ </br>
+
+
+## 🔗 Social (소셜)
+<li><a href="https://www.instagram.com/app_and_me/">instagram</a></li>
+<li><a href="https://github.com/app-and-me">Github</a></li>
+
+</br>
+</br>
+
+<sub>본 프로젝트는 **미림마이스터고 IT SHOW 2025** 출품을 위해 제작되었습니다.</sub>
