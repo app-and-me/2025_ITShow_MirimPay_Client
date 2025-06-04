@@ -1,6 +1,7 @@
 <div align="center">
-  <h1>MIRIM PAY</h1>
-  <p>MIRIMPAY는 미림마이스터고 교내 매점을 더 편리하게 사용하기 위한 키오스크 및 앱 서비스입니다. </p>
+  <h1><b>MIRIM PAY< 🍃/b></h1>
+  <p>앱앤미 13기 2025 IT SHOW 출품작 <b>MIRIM PAY</b>는</p>
+  <p>미림마이스터고 교내 매점을 더 편리하게 사용하기 위한 키오스크 및 앱 서비스입니다. </p>
   <p>
     <a href="https://github.com/app-and-me/2025_ITShow_MirimPay_Client.git">
       <img src="https://img.shields.io/badge/GitHub-Frontend-38C172?style=flat-square&logo=github" alt="GitHub Frontend" />
@@ -19,8 +20,8 @@
 
 ## 🧾 Project Overview (프로젝트 개요)
 
-**MIRIMPAY**는 미림마이스터고의 교내 매점 무인 결제 시스템입니다. </br>
-앱에서 카드를 등록한 후, 키오스크 내에서 QR 코드를 또는 얼굴 인식을 이용해 휴대폰이 없더라도 간편히 결제할 수 있습니다. </br>
+**MIRIMPAY**는 미림마이스터고의 교내 매점 무인 결제 시스템 및 앱 서비스입니다. </br>
+학교 이메일을 통해 간편 로그인 후, 앱에서 카드를 등록하고 QR 코드 또는 얼굴 인식을 이용해 휴대폰이 없더라도 간편히 결제할 수 있습니다. </br>
 MIRIMPAY는 교내 소비 환경을 한층 효율적으로 개선합니다. </br>
 
 </br>
