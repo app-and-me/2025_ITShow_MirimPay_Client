@@ -7,7 +7,7 @@ const breakpoints = {
 
 const CartSummary = styled.div`
   position: fixed;
-  bottom: 0;
+  bottom: 3rem;
   left: 0;
   right: 0;
   width: 100%;
@@ -43,6 +43,8 @@ const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 0.5rem;
+  width: 100%;
+  margin-top: 1rem;
 `;
 
 interface FooterProps {
