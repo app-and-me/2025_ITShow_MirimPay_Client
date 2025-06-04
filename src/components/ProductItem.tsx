@@ -57,25 +57,31 @@ const Quantity = styled.span`
 
 const RemoveButton = styled.button`
   position: absolute;
-  top: -10px;
-  left: -10px;
+  top: 3px;
+  left: 0;
+  transform: translate(-50%, -50%);
   width: 24px;
   height: 24px;
   border-radius: 50%;
   background-color: #67726C;
   color: white;
   font-size: 1rem;
-  border: 4px solid white; 
+  border: 4px solid white;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
+const Icon = styled.span`
+  position: relative;
+  top: -1px; /* ← 여기로 조절 */
+`;
+
 const ProductItem: React.FC<Props> = ({ product, onQuantityChange, onRemove }) => {
   return (
     <Item>
-      <RemoveButton onClick={() => onRemove(product.id)}>×</RemoveButton>
+      <RemoveButton onClick={() => onRemove(product.id)}><Icon>×</Icon></RemoveButton>
 
       <Info>
         <Name>{product.name}</Name>
