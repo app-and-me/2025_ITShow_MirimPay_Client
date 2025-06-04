@@ -1,5 +1,5 @@
 <div align="center">
-  <h1><b>MIRIM PAY< 🍃/b></h1>
+  <h1><b>MIRIM PAY 🍃</b></h1>
   <p>앱앤미 13기 2025 IT SHOW 출품작 <b>MIRIM PAY</b>는</p>
   <p>미림마이스터고 교내 매점을 더 편리하게 사용하기 위한 키오스크 및 앱 서비스입니다. </p>
   <p>
