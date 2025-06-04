@@ -47,7 +47,7 @@ const CartSummary = styled.div`
   right: 0;
   width: 100%;
   background-color: white;
-  padding: 1.5rem 1rem 3rem;
+  padding: 1.5rem 1rem 2rem;
   border-top: 1px solid #3A3A3A;
   display: flex;
   flex-direction: column;
@@ -164,7 +164,7 @@ export default function Cart() {
           </ProductWrapper>
         ))}
         <Footer totalQuantity={totalQuantity} totalPrice={totalPrice}>
-          <Button variant="pay" onClick={goToPayment}>결제하기</Button>
+          <Button variant="pay" onClick={goToPayment} disabled={totalQuantity == 0}>결제하기</Button>
         </Footer>
       </CartContainer>
     </>

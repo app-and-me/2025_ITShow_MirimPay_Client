@@ -11,9 +11,16 @@ const StyledButton = styled.button<ButtonProps>`
   border-radius: 0.375rem;
   padding: 0.5rem 1rem;
   font-weight: 500;
-  transition: background-color 0.2s ease;
   border: none;
   cursor: pointer;
+
+    ${(props) =>
+    props.disabled &&
+    css`
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    `}
 
   ${(props) =>
     props.variant == "plus" &&
@@ -73,7 +80,7 @@ const StyledButton = styled.button<ButtonProps>`
       css`
         background-color: #249D57;
         color: white;
-        width: 150px;
+        width: 200px;
         height: 50px;
         float: right;
         border-radius: 15px;
