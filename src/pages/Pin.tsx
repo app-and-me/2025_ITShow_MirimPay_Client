@@ -1,12 +1,13 @@
 // import styled from "styled-components";
 import Pinimg from '../assets/PinRecognition.png';
-import deal from '../assets/deal.svg';
+import deal from '../assets/deal.png';
 import React, { useEffect, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 
 
 const GlobalStyle = createGlobalStyle`
   body {
+    margin-top: 0;
     overflow: hidden;
   }
 `;
@@ -14,9 +15,9 @@ const GlobalStyle = createGlobalStyle`
 const PinContainer = styled.div`
   padding: 1.5rem;
   padding-bottom: 7rem;
-  max-width: 28rem;
   margin: 0 auto;
   background-color: #008C0E;
+  height: 100vh; 
 `;
 
 const Title = styled.p`
@@ -50,7 +51,6 @@ const DotContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin-bottom: 315px;
 `;
 
 const Dot = styled.div<{ filled: boolean }>`
@@ -61,9 +61,7 @@ const Dot = styled.div<{ filled: boolean }>`
 `;
 
 const Keypad = styled.div`
-  margin-top: 150px;
   position: absolute;
-  top: 50%;
   display: grid;
   grid-template-columns: repeat(3, 100px);
   gap: 10px;
@@ -71,15 +69,15 @@ const Keypad = styled.div`
 
 const KepadWrapper = styled.div`
   display: flex;
+  margin-left: 38px;
   justify-content: center;
-  height: 100vh; 
 `
 
 const Button = styled.button`
   width: 60px;
   height: 60px;
   background-color:  #008C0E;
-  color: white; // 숫자 색상
+  color: white;
   font-size: 30px;
   -webkit-text-stroke: 0.5px white;
   border: none;

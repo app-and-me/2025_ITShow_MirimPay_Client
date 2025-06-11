@@ -7,25 +7,25 @@ import { useNavigate } from 'react-router-dom';
 
 const GlobalStyle = createGlobalStyle`
   body {
+    margin-top: 0;
     overflow: hidden;
   }
 `;
 
 const Container = styled.div`
   padding: 1.5rem;
-  padding-bottom: 7rem;
-  max-width: 28rem;
+  padding-bottom: 15rem;
   margin: 0 auto;
   background-color: #008C0E;
+  height: 100vh; 
 `;
 
-const Title = styled.h2`
+const Title = styled.p`
   text-align: center;
   font-size: 25px;
   color: white;
   -webkit-text-stroke: 0.8px white;
-  margin-top: 70px;
-  margin-bottom: 45px;
+  margin-top: 80px;
 `
 const Camerabox = styled.div`
   display: flex;
@@ -34,8 +34,7 @@ const Camerabox = styled.div`
 `
 
 const CameraWrapper = styled.div`
-  margin-top: 5%; 
-  margin-bottom: 30%;
+  margin-top: 5rem; 
   width: 210px;
   height: 210px;
   border-radius: 50%;
@@ -53,17 +52,17 @@ const StyledWebcam = styled(Webcam)`
 `
 
 const Subtitle = styled.div`
-  color: white;
-  text-align: center;
   font-size: 1.3rem;
-  margin-top: 100px;
-  -webkit-text-stroke: 0.4px white;
-  line-height: 1.6;
+  margin-top: 8rem;
+  text-align: center;
+  font-size: 1.2rem;
+  color: white;
+  -webkit-text-stroke: 0.8px white;
 `
 const Button = styled.button`
   margin: 40px auto 0 auto; 
   margin-top: 40px;
-  width: 350px;
+  width: 250px;
   height: 60px;
   border-radius: 12px;
   border: 2px solid white;
@@ -71,14 +70,13 @@ const Button = styled.button`
   color: black;
   font-size: 1.1rem;
   cursor: pointer;
-    display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 `
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
-  width: 100%;
 `
 
 export default function Face() {
