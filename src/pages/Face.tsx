@@ -1,16 +1,7 @@
 import React from 'react'
 import Webcam from 'react-webcam'
-import styled, { createGlobalStyle } from 'styled-components'
+import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'; 
-
-
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin-top: 0;
-    overflow: hidden;
-  }
-`;
 
 const Container = styled.div`
   padding: 1.5rem;
@@ -84,7 +75,6 @@ export default function Face() {
   const goBack = () => navigate('/Payment');
   return (
     <>
-      <GlobalStyle />
       <Container>
         <Title>얼굴 인식 중</Title>
         <Camerabox>

@@ -5,7 +5,6 @@ import Button from "../components/Button";
 import Footer from "../components/Footer";
 import BarcodeIcon from "../components/BarcodeIcon";
 import FaceIcon from "../components/FaceIcon";
-import GlobalStyle from "../styles/GlobalStyle";
 import styled from "styled-components";
 
 const Main = styled.div`
@@ -88,7 +87,6 @@ export default function Payment() {
 
   return (
     <>
-      <GlobalStyle />
       <Header />
 
       <Main>

@@ -5,7 +5,6 @@ import Header from "../components/Header";
 import Button from "../components/Button";
 import ProductItem from "../components/ProductItem";
 import Footer from "../components/Footer";
-import GlobalStyle from "../styles/GlobalStyle";
 
 interface Product {
   id: number;
@@ -143,7 +142,6 @@ export default function Cart() {
 
   return (
     <>
-      <GlobalStyle />
       <Header />
 
       <CartHeader>

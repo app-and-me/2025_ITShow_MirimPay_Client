@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import GlobalStyle from '../styles/GlobalStyle';
 import MainImage from '../assets/Main.png';
 
 const Container = styled.div`
@@ -53,7 +52,6 @@ const Main: React.FC = () => {
 
     return (
         <>
-          <GlobalStyle />
           <Container>
             <ButtonWrapper>
               <Button onClick={goNext}>주문하기</Button>

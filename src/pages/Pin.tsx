@@ -2,19 +2,12 @@
 import Pinimg from '../assets/PinRecognition.png';
 import deal from '../assets/deal.png';
 import React, { useEffect, useState } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin-top: 0;
-    overflow: hidden;
-  }
-`;
 
 const PinContainer = styled.div`
   padding: 1.5rem;
-  padding-bottom: 7rem;
+  padding-bottom: 15rem;
   margin: 0 auto;
   background-color: #008C0E;
   height: 100vh; 
@@ -129,7 +122,6 @@ const Pin: React.FC = () => {
 
   return (
     <>
-      <GlobalStyle />
       <PinContainer>
         <Title>결제 비밀번호 입력</Title>
         <Barcode src={Pinimg} alt="핀 얼굴 인식 이미지" />
