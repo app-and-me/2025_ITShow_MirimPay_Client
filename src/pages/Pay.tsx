@@ -1,14 +1,7 @@
 // import styled from "styled-components";
 import barcondeimg from '../assets/barcode.png';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin-top: 0;
-    overflow: hidden;
-  }
-`;
 
 const PayContainer = styled.div`
   padding: 1.5rem;
@@ -73,7 +66,6 @@ export default function Pay() {
 
   return (
     <>
-      <GlobalStyle />
       <PayContainer>
         <Title>바코드 스캔중</Title>
         <ImgWrapper>

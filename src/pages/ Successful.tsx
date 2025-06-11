@@ -1,12 +1,6 @@
 // import styled from "styled-components";////
 import Shopimg from '../assets/Shop.png';
-import styled, { createGlobalStyle } from 'styled-components';
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    overflow: hidden;
-  }
-`;
+import styled from 'styled-components';
 
 const PaymentContainer = styled.div`
   padding: 1.5rem;
@@ -71,7 +65,6 @@ const SubTitle = styled.div`
 export default function Payment() {
   return (
     <>
-      <GlobalStyle />
       <PaymentContainer>
         <SquareBox>
           <Circle>
