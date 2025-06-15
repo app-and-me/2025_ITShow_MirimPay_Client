@@ -13,7 +13,7 @@ const PayContainer = styled.div`
 
 const Title = styled.p`
   text-align: center;
-  font-size: 25px;
+  font-size: 50px;
   color: white;
   -webkit-text-stroke: 0.8px white;
   margin-top: 80px;
@@ -22,19 +22,19 @@ const ImgWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  // height: 30vh; /* 또는 부모 높이 설정 */
 `
 
 const Barcode = styled.img`
-  padding-top: 2rem;
+  padding-top: 5rem;
   padding-bottom: 2rem;
-  max-width: 18rem;
+  max-width: 25rem;
   display: block;
 `
 
 const SubTitle = styled.div`
+  margin-top: 3rem;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 2rem;
   color: white;
   -webkit-text-stroke: 0.8px white;
 `

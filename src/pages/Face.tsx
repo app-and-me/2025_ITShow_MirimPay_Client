@@ -13,7 +13,7 @@ const Container = styled.div`
 
 const Title = styled.p`
   text-align: center;
-  font-size: 25px;
+  font-size: 50px;
   color: white;
   -webkit-text-stroke: 0.8px white;
   margin-top: 80px;
@@ -25,9 +25,9 @@ const Camerabox = styled.div`
 `
 
 const CameraWrapper = styled.div`
-  margin-top: 5rem; 
-  width: 210px;
-  height: 210px;
+  margin-top: 8rem; 
+  width: 260px;
+  height: 260px;
   border-radius: 50%;
   border: 4px double white;
   overflow: hidden;
@@ -43,17 +43,15 @@ const StyledWebcam = styled(Webcam)`
 `
 
 const Subtitle = styled.div`
-  font-size: 1.3rem;
   margin-top: 8rem;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 2rem;
   color: white;
   -webkit-text-stroke: 0.8px white;
 `
 const Button = styled.button`
-  margin: 40px auto 0 auto; 
-  margin-top: 40px;
-  width: 250px;
+  margin: 60px auto 0 auto;
+  width: 300px;
   height: 60px;
   border-radius: 12px;
   border: 2px solid white;
