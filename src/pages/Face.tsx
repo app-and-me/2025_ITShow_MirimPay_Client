@@ -217,7 +217,7 @@ export default function Face() {
     if (detectionIntervalRef.current) {
       clearInterval(detectionIntervalRef.current);
     }
-    navigate('/Payment');
+    navigate('/payment');
   }
 
   return (

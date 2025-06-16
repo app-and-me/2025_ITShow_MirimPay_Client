@@ -1,9 +1,9 @@
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+// import { persist, createJSONStorage } from 'zustand/middleware';
 
 interface CartState {
-  items: Array<{ productId: string; quantity: number; name: string; price: number; stock?: number }>; // Add stock to item
-  addToCart: (productId: string, name: string, price: number, stock?: number) => void; // Modify addToCart
+  items: Array<{ productId: string; quantity: number; name: string; price: number; stock?: number }>;
+  addToCart: (productId: string, name: string, price: number, stock?: number) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
@@ -12,9 +12,14 @@ interface CartState {
 }
 
 export const useCartStore = create<CartState>()(
-  persist(
+  // persist(
     (set, get) => ({
-      items: [],
+      items: [
+        { productId: "8801019602498", quantity: 1, name: "구운감자", price: 1100, stock: 10 },
+        { productId: "8801117365103", quantity: 2, name: "리찌 알맹이", price: 1300, stock: 32 },
+        { productId: "8801117674700", quantity: 5, name: "치킨팝 닭강정맛", price: 1200, stock: 30 },
+        { productId: "8801117158118", quantity: 1, name: "비쵸비 5개입", price: 4000, stock: 16 }
+      ],
       addToCart: (productId, name, price, stock) =>
         set((state) => {
           const existingItem = state.items.find((item) => item.productId === productId);
@@ -48,9 +53,9 @@ export const useCartStore = create<CartState>()(
         return get().items.reduce((total, item) => total + item.quantity, 0);
       }
     }),
-    {
-      name: 'cart-storage',
-      storage: createJSONStorage(() => localStorage),
-    }
-  )
+    // {
+    //   name: 'cart-storage',
+    //   storage: createJSONStorage(() => localStorage),
+    // }
+  // )
 );

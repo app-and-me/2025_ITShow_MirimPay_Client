@@ -57,6 +57,8 @@ export default function Cart() {
   const navigate = useNavigate();
   const { items, updateQuantity, removeFromCart, clearCart, getTotalPrice, getTotalItems } = useCartStore();
 
+  console.log("Cart items:", items);
+
   const html5QrcodeScannerRef = useRef<Html5QrcodeScanner | null>(null);
   const isProcessingScanRef = useRef(false);
   const lastScannedBarcodeRef = useRef<string | null>(null);
@@ -65,7 +67,6 @@ export default function Cart() {
   useEffect(() => {
     const onScanSuccess = async (decodedText: string) => {
       const barcode = decodedText;
-      console.log(`Scanned barcode: ${barcode}`);
 
       if (isProcessingScanRef.current ||
           (lastScannedBarcodeRef.current === barcode && scanCooldownTimeoutRef.current)) {
@@ -101,7 +102,7 @@ export default function Cart() {
       }
     };
 
-    const onScanFailure = () => {
+    const onScanFailure = (error: string) => {
     };
 
     if (document.getElementById("qr-reader")) {
@@ -170,6 +171,7 @@ export default function Cart() {
       </CartHeader>
 
       <CartContainer>
+        {/* <div id="qr-reader" style={{ width: '100%', height: '100%' }}></div> */}
         {items.map(product => (
           <ProductWrapper key={product.productId}>
             <ProductItem
@@ -182,16 +184,6 @@ export default function Cart() {
         <Footer totalQuantity={totalQuantity} totalPrice={totalPrice}>
           <Button variant="pay" onClick={goToPayment} disabled={totalQuantity === 0}>결제하기</Button>
         </Footer>
-        <div 
-          id="qr-reader" 
-          style={{ 
-            position: 'absolute',
-            top: '-9999px',
-            left: '-9999px',
-            width: '300px',
-            height: '300px'
-          }}
-        ></div>
       </CartContainer>
     </>
   );
