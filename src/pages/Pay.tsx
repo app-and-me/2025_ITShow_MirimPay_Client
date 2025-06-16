@@ -136,7 +136,7 @@ export default function Pay() {
             user: user,
           });
 
-          navigate('/Pin');
+          navigate('/pin');
         } catch (error) {
           console.error('Error processing QR code:', error);
           setScanError('Failed to process QR code. Please try again.');
@@ -167,7 +167,7 @@ export default function Pay() {
     if (qrScannerRef.current) {
       qrScannerRef.current.stop();
     }
-    navigate('/Payment');
+    navigate('/payment');
   };
 
   return (

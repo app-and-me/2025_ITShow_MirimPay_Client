@@ -136,11 +136,6 @@ const Pin: React.FC = () => {
             });
         }
     }
-
-    if (!paymentDetails.paymentType) {
-        console.warn("Payment type not set, redirecting to payment selection page.");
-        navigate('/payment');
-    }
   }, [navigate, paymentDetails, cartItems, getTotalPrice, getTotalItems, shuffleNumbers]);
 
   const handleConfirm = useCallback(async () => {
