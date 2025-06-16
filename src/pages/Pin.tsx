@@ -1,8 +1,11 @@
-// import styled from "styled-components";
 import Pinimg from '../assets/PinRecognition.png';
 import deal from '../assets/deal.png';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { usePaymentStore } from '../store/payment';
+import { useCartStore } from '../store/cart';
+import { postPaymentProcess, postPaymentFaceBase64, postProductsPurchase } from '../utils/api';
 
 
 const PinContainer = styled.div`
@@ -23,14 +26,13 @@ const Title = styled.p`
 `;
 
 const Barcode = styled.img`
-  padding-bottom: 10rem;
-  margin-left: -24px;
   width: 170px;
-  max-width: 31rem;
+  height: 170px;
+  border-radius: 50%;
+  object-fit: cover;
   display: block;
-  justify-content: center;
-  padding-bottom: 40px;
-  margin: 0 auto;
+  margin: 0 auto 40px auto;
+  background-color: #fff;
 `;
 
 const User_name = styled.div`
@@ -93,39 +95,149 @@ const EmptyBox = styled.div`
 `;
 
 const Pin: React.FC = () => {
-
+  const navigate = useNavigate();
   const [input, setInput] = useState('');
   const [numbers, setNumbers] = useState<string[]>([]);
 
-  const shuffleNumbers = () => {
-    const nums = Array.from({ length: 10 }, (_, i) => i.toString()); // 0~9 포함
+  const paymentDetails = usePaymentStore((state) => state);
+  const { items: cartItems, clearCart, getTotalPrice, getTotalItems } = useCartStore();
+  const faceImageRef = useRef<string | null>(null);
+
+  const shuffleNumbers = useCallback(() => {
+    const nums = Array.from({ length: 10 }, (_, i) => i.toString());
     for (let i = nums.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [nums[i], nums[j]] = [nums[j], nums[i]];
     }
     setNumbers(nums);
-  };
+  }, []);
 
   useEffect(() => {
     shuffleNumbers();
-  }, []);
+  }, [shuffleNumbers]);
 
-  const handleClick = (num: string) => {
+  useEffect(() => {
+    const storedFaceImage = localStorage.getItem('faceImage');
+    if (storedFaceImage) {
+        faceImageRef.current = storedFaceImage;
+        localStorage.removeItem('faceImage');
+    }
+
+    if (paymentDetails.paymentType === 'face') {
+        if (!paymentDetails.amount || !paymentDetails.orderName) {
+            const totalAmount = getTotalPrice();
+            const totalItems = getTotalItems();
+            const orderName = cartItems.length > 0 
+                ? `${cartItems[0].name} 등 ${totalItems}건` 
+                : '상품 없음';
+            paymentDetails.setPaymentDetails({
+                amount: totalAmount,
+                orderName: orderName,
+            });
+        }
+    }
+
+    if (!paymentDetails.paymentType) {
+        console.warn("Payment type not set, redirecting to payment selection page.");
+        navigate('/payment');
+    }
+  }, [navigate, paymentDetails, cartItems, getTotalPrice, getTotalItems, shuffleNumbers]);
+
+  const handleConfirm = useCallback(async () => {
+    if (input.length !== 4) {
+      alert('PIN은 4자리여야 합니다.');
+      return;
+    }
+
+    try {
+      let paymentSuccessful = false;
+      if (paymentDetails.paymentType === 'qr') {
+        if (!paymentDetails.orderId || !paymentDetails.amount || !paymentDetails.orderName || !paymentDetails.billingKey || !paymentDetails.customerKey || !paymentDetails.accessToken) {
+          alert('QR 결제 정보가 올바르지 않습니다. 결제수단 선택화면으로 돌아갑니다.');
+          paymentDetails.clearPaymentDetails();
+          navigate('/payment');
+          return;
+        }
+        await postPaymentProcess(
+          {
+            orderId: paymentDetails.orderId,
+            amount: paymentDetails.amount,
+            orderName: paymentDetails.orderName,
+            billingKey: paymentDetails.billingKey,
+            customerKey: paymentDetails.customerKey,
+            pin: input,
+          },
+          paymentDetails.accessToken
+        );
+        paymentSuccessful = true;
+      } else if (paymentDetails.paymentType === 'face') {
+        if (!faceImageRef.current || !paymentDetails.amount || !paymentDetails.orderName) {
+            alert('얼굴 이미지 또는 주문 정보가 없습니다. 결제수단 선택화면으로 돌아갑니다.');
+            paymentDetails.clearPaymentDetails();
+            navigate('/payment');
+            return;
+        }
+        await postPaymentFaceBase64({
+            amount: paymentDetails.amount,
+            orderName: paymentDetails.orderName,
+            faceImage: faceImageRef.current,
+            pin: input,
+        });
+        paymentSuccessful = true;
+      } else {
+        alert('알 수 없는 결제 유형입니다. 결제수단 선택화면으로 돌아갑니다.');
+        paymentDetails.clearPaymentDetails();
+        navigate('/payment');
+        return;
+      }
+
+      if (paymentSuccessful) {
+        const purchaseItems = cartItems.map(item => ({ productId: item.productId, quantity: item.quantity }));
+        if (purchaseItems.length > 0) {
+          await postProductsPurchase({ items: purchaseItems });
+        }
+        
+        clearCart();
+        paymentDetails.clearPaymentDetails();
+        setInput(''); 
+        navigate('/successful');
+      }
+    } catch (error) {
+      console.error('Payment failed:', error);
+      alert('결제에 실패했습니다. PIN 번호를 확인하거나 다시 시도해주세요.');
+      setInput(''); 
+    }
+  }, [input, paymentDetails, cartItems, navigate, clearCart]);
+
+  useEffect(() => {
+    if (input.length === 4) {
+      handleConfirm();
+    }
+  }, [input, handleConfirm]);
+
+  const handleClick = useCallback((num: string) => {
     if (input.length < 4) {
       setInput((prev) => prev + num);
     }
-  };
+  }, [input.length]);
 
-  const handleDelete = () => {
+  const handleDelete = useCallback(() => {
     setInput((prev) => prev.slice(0, -1));
-  };
+  }, []);
 
   return (
     <>
       <PinContainer>
         <Title>결제 비밀번호 입력</Title>
-        <Barcode src={Pinimg} alt="핀 얼굴 인식 이미지" />
-        <User_name>유*윤</User_name>
+        <Barcode 
+          src={paymentDetails.paymentType === 'face' && faceImageRef.current ? faceImageRef.current : Pinimg} 
+          alt={paymentDetails.paymentType === 'face' ? '캡처된 얼굴 이미지' : '결제수단 기본 이미지'} 
+        />
+        <User_name>
+          {paymentDetails.paymentType === 'face' && paymentDetails.user?.nickname 
+            ? paymentDetails.user.nickname 
+            : '고객님'}
+        </User_name>
 
         <DotContainer>
           {[0, 1, 2, 3].map((i) => (
@@ -139,12 +251,12 @@ const Pin: React.FC = () => {
                 {num}
               </Button>
             ))}
-            <EmptyBox />
-            <Button onClick={() => handleClick(numbers[9])}>
-              {numbers[9]}
-            </Button>
-
-            {/* 지우기 버튼: 숫자 없이 이미지만 보이게 */}
+            <EmptyBox /> 
+            {numbers.length > 9 && (
+                <Button onClick={() => handleClick(numbers[9])}>
+                    {numbers[9]}
+                </Button>
+            )}
             <DeleteButton onClick={handleDelete}>
               <img src={deal} alt="지우기" style={{ width: '40px', height: '40px' }} />
             </DeleteButton>

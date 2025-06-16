@@ -1,29 +1,20 @@
-import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import Header from "../components/Header";
 import Button from "../components/Button";
 import ProductItem from "../components/ProductItem";
 import Footer from "../components/Footer";
+import { useCartStore } from "../store/cart";
+import { getProductById } from '../utils/api';
+import { useEffect, useRef } from 'react';
+import { Html5QrcodeScanner } from 'html5-qrcode';
 
 interface Product {
-  id: number;
+  productId: string;
   name: string;
   price: number;
   quantity: number;
 }
-
-const initialProducts: Product[] = [
-  { id: 1, name: "오리온 도도한 나초 샤워크림어니언", price: 1700, quantity: 1 },
-  { id: 2, name: "롤리팝 아이스캔디", price: 700, quantity: 2 },
-  { id: 3, name: "오리온 더 탱글 마이구미", price: 1200, quantity: 1 },
-  { id: 4, name: "나나콘", price: 1200, quantity: 1 },
-];
-
-const breakpoints = {
-  sm: "640px",
-  md: "1024px",
-};
 
 const CartContainer = styled.div`
   padding: 10rem 1.5rem 10rem;
@@ -34,53 +25,8 @@ const CartContainer = styled.div`
   box-sizing: border-box;
 `;
 
-
 const ProductWrapper = styled.div`
   margin: 0 1rem;
-`;
-
-const CartSummary = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  background-color: white;
-  padding: 1.5rem 1rem 2rem;
-  border-top: 1px solid #3A3A3A;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const SummaryRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.875rem;
-  color: #6b7280;
-`;
-
-const TotalRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-weight: 700;
-  font-size: 1.25rem;
-  color: #008C0E;
-`;
-
-const CartHeaderWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1rem;
-  padding: 1rem;
-  overflow-x: hidden;
-
-  @media screen and (orientation: portrait) {
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 10rem 1rem 10rem;
-  }
 `;
 
 const CartTitle = styled.h1`
@@ -101,7 +47,7 @@ const CartHeader = styled.div`
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;  
+  gap: 1rem;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -109,61 +55,143 @@ const CartHeader = styled.div`
 `;
 export default function Cart() {
   const navigate = useNavigate();
+  const { items, updateQuantity, removeFromCart, clearCart, getTotalPrice, getTotalItems } = useCartStore();
+
+  const html5QrcodeScannerRef = useRef<Html5QrcodeScanner | null>(null);
+  const isProcessingScanRef = useRef(false);
+  const lastScannedBarcodeRef = useRef<string | null>(null);
+  const scanCooldownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const onScanSuccess = async (decodedText: string) => {
+      const barcode = decodedText;
+      console.log(`Scanned barcode: ${barcode}`);
+
+      if (isProcessingScanRef.current ||
+          (lastScannedBarcodeRef.current === barcode && scanCooldownTimeoutRef.current)) {
+        return;
+      }
+
+      isProcessingScanRef.current = true;
+      lastScannedBarcodeRef.current = barcode;
+
+      if (scanCooldownTimeoutRef.current) {
+        clearTimeout(scanCooldownTimeoutRef.current);
+      }
+
+      try {
+        const productDetails = await getProductById(barcode);
+        const { items: currentItems, addToCart: currentAddToCart, updateQuantity: currentUpdateQuantity } = useCartStore.getState();
+        const existingItem = currentItems.find(item => item.productId === productDetails.id);
+
+        if (existingItem) {
+          if (existingItem.quantity < productDetails.quantity) {
+            currentUpdateQuantity(productDetails.id, existingItem.quantity + 1);
+          }
+        } else {
+          currentAddToCart(productDetails.id, productDetails.name, productDetails.price, productDetails.quantity);
+        }
+      } catch (error) {
+        console.error(`Error processing barcode ${barcode}:`, error);
+      } finally {
+        scanCooldownTimeoutRef.current = setTimeout(() => {
+          scanCooldownTimeoutRef.current = null;
+        }, 2000);
+        isProcessingScanRef.current = false;
+      }
+    };
+
+    const onScanFailure = () => {
+    };
+
+    if (document.getElementById("qr-reader")) {
+      const config = {
+        fps: 10,
+        qrbox: 250,
+        videoConstraints: {
+          facingMode: "environment"
+        },
+        useBarCodeDetectorIfSupported: false
+      };
+      const scanner = new Html5QrcodeScanner(
+        "qr-reader",
+        config,
+        false
+      );
+      html5QrcodeScannerRef.current = scanner;
+      scanner.render(onScanSuccess, onScanFailure);
+    }
+
+    return () => {
+      if (scanCooldownTimeoutRef.current) {
+        clearTimeout(scanCooldownTimeoutRef.current);
+      }
+      if (html5QrcodeScannerRef.current) {
+        html5QrcodeScannerRef.current.clear().catch(err => {
+          console.error("Failed to clear html5QrcodeScanner: ", err);
+        });
+        html5QrcodeScannerRef.current = null;
+      }
+    };
+  }, []);
 
   const goToPayment = () => {
-    navigate("/payment", {
-      state: {
-        totalQuantity,
-        totalPrice,
-      },
-    });
+    navigate("/payment");
   };
 
-  const [products, setProducts] = useState<Product[]>(initialProducts);
-
-  const handleQuantityChange = (id: number, delta: number) => {
-    setProducts(prev =>
-      prev.map(p =>
-        p.id == id ? { ...p, quantity: Math.max(1, p.quantity + delta) } : p
-      )
-    );
+  const handleQuantityChange = (productId: string, delta: number) => {
+    const item = items.find(p => p.productId === productId);
+    if (item) {
+      const newQuantity = item.quantity + delta;
+      updateQuantity(productId, newQuantity);
+    }
   };
 
-  const handleRemove = (id: number) => {
-    setProducts(prev => prev.filter(p => p.id !== id));
+  const handleRemove = (productId: string) => {
+    removeFromCart(productId);
   };
 
   const handleClearAll = () => {
-    setProducts([]);
+    clearCart();
   };
 
-  const totalQuantity = products.reduce((sum, p) => sum + p.quantity, 0);
-  const totalPrice = products.reduce((sum, p) => sum + p.price * p.quantity, 0);
+  const totalQuantity = getTotalItems();
+  const totalPrice = getTotalPrice();
 
   return (
     <>
       <Header />
 
       <CartHeader>
-        <CartTitle>리더기에 바코드를 찍어 주세요</CartTitle>
+        <CartTitle>카메라에 바코드를 스캔해주세요</CartTitle>
         <Button variant="delete" onClick={handleClearAll}>
           상품 전체 삭제
         </Button>
       </CartHeader>
 
       <CartContainer>
-        {products.map(product => (
-          <ProductWrapper key={product.id}>
+        {items.map(product => (
+          <ProductWrapper key={product.productId}>
             <ProductItem
-              product={product}
+              product={product as Product}
               onQuantityChange={handleQuantityChange}
               onRemove={handleRemove}
             />
           </ProductWrapper>
         ))}
         <Footer totalQuantity={totalQuantity} totalPrice={totalPrice}>
-          <Button variant="pay" onClick={goToPayment} disabled={totalQuantity == 0}>결제하기</Button>
+          <Button variant="pay" onClick={goToPayment} disabled={totalQuantity === 0}>결제하기</Button>
         </Footer>
+        <div 
+          id="qr-reader" 
+          style={{ 
+            position: 'absolute',
+            top: '-9999px',
+            left: '-9999px',
+            width: '300px',
+            height: '300px'
+          }}
+        ></div>
       </CartContainer>
     </>
   );

@@ -1,4 +1,3 @@
-// import styled from "styled-components";////
 import Shopimg from '../assets/Shop.png';
 import styled from 'styled-components';
 

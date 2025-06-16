@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import Header from "../components/Header";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
 import BarcodeIcon from "../components/BarcodeIcon";
 import FaceIcon from "../components/FaceIcon";
 import styled from "styled-components";
+import { useCartStore } from "../store/cart";
 
 const Main = styled.div`
   padding: 40px 20px;
@@ -69,9 +70,11 @@ const MethodButton = styled.button<{ selected: boolean }>`
 `;
 
 export default function Payment() {
-  const location = useLocation();
   const navigate = useNavigate();
-  const { totalQuantity, totalPrice } = location.state || { totalQuantity: 0, totalPrice: 0 };
+  const { getTotalItems, getTotalPrice } = useCartStore();
+
+  const totalQuantity = getTotalItems();
+  const totalPrice = getTotalPrice();
 
   const [selectedMethod, setSelectedMethod] = useState<'pay' | 'face' | null>('pay');
 
@@ -79,9 +82,9 @@ export default function Payment() {
 
   const goNext = () => {
     if (selectedMethod === 'pay') {
-      navigate('/pay', { state: { totalQuantity, totalPrice } });
+      navigate('/pay');
     } else if (selectedMethod === 'face') {
-      navigate('/face', { state: { totalQuantity, totalPrice } });
+      navigate('/face');
     }
   };
 

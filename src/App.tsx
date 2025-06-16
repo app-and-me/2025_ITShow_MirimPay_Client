@@ -1,12 +1,10 @@
-// route
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import Home from './pages/test';
 import Cart from './pages/Cart';
 import Payment from "./pages/Payment";
 import Pay from './pages/Pay';
 import Face from './pages/Face';
 import Pin from './pages/Pin';
-import Successful from './pages/ Successful';
+import Successful from './pages/Successful';
 import Main from './pages/Main';
 
 function App() {
