@@ -3,79 +3,77 @@ import styled from 'styled-components';
 
 const PaymentContainer = styled.div`
   padding: 1.5rem;
-  padding-bottom: 7rem;
-  max-width: 28rem;
+  padding-bottom: 15rem;
   margin: 0 auto;
   background-color: #008C0E;
-`
-const SquareBox = styled.div`
-  margin-top: 30px;
-  margin-left: 30px;
-  width: 85%;
-  background-color: #fff;
-  border-radius: 20px;
-  padding-top: 180px;
-  padding-bottom: 100px;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-`
+`;
 
+const SquareBox = styled.div`
+  margin-top: 40px;
+  width: 85%;
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 400px 20px 100px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+`;
 
 const Circle = styled.div`
+  position: absolute;
+  top: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 150px;
   height: 150px;
-  flex-shrink: 0;
-  border-radius: 280px;
+  border-radius: 50%;
   background: #0F9444;
-`
+`;
 
 const ShopImg = styled.img`
-  margin-left: 30px;
-  margin-top: 35px;
-  width: 95px;
+  margin-left: 8px;
+  margin-bottom: -4px;
+  width: 90px;
   height: 90px;
-`
-
-const TitleContainer = styled.div`
-  z-index: 9999;
-`
+`;
 
 const Title = styled.div`
   text-align: center;
-  font-size: 25px;
+  font-size: 22px;
   color: black;
-  -webkit-text-stroke: 0.8px black;
-  margin-top: 80px;
-`
+  font-weight: bold;
+  margin-top: -60px;
+  line-height: 1.5;
+
+`;
 
 const SubTitle = styled.div`
   text-align: center;
-  font-size: 25px;
-  color:  #0F9444;
-  -webkit-text-stroke: 0.8px  #0F9444;
-  margin-top: 200px;
-`
-
-
-
+  font-size: 20px;
+  color: #0F9444;
+  font-weight: bold;
+  margin-top: 300px;
+`;
 
 export default function Payment() {
   return (
-    <>
-      <PaymentContainer>
-        <SquareBox>
-          <Circle>
-            <ShopImg src={Shopimg} alt="shop" />
-          </Circle>
-          <TitleContainer>
-            <Title>결제가 성공적으로<br></br>
-              완료되었습니다!</Title>
-            <SubTitle>MIRIM PAY</SubTitle>
-          </TitleContainer>
-        </SquareBox>
-      </PaymentContainer>
-    </>
-  )
+    <PaymentContainer>
+      <SquareBox>
+        <Circle>
+          <ShopImg src={Shopimg} alt="shop" />
+        </Circle>
+        <Title>
+          결제가 성공적으로<br />
+          완료되었습니다!
+        </Title>
+        <SubTitle>MIRIM PAY</SubTitle>
+      </SquareBox>
+    </PaymentContainer>
+  );
 }
