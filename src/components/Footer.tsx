@@ -1,10 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-const breakpoints = {
-  sm: "640px",
-};
-
 const CartSummary = styled.div`
   position: fixed;
   bottom: 3rem;

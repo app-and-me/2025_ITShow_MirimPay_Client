@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Button from "./Button";
 
 interface Product {
-  id: number;
+  productId: string;
   name: string;
   price: number;
   quantity: number;
@@ -11,8 +11,8 @@ interface Product {
 
 interface Props {
   product: Product;
-  onQuantityChange: (id: number, delta: number) => void;
-  onRemove: (id: number) => void;
+  onQuantityChange: (productId: string, delta: number) => void;
+  onRemove: (productId: string) => void;
 }
 
 const Item = styled.div`
@@ -20,11 +20,11 @@ const Item = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #D7D7D7;
+  border: 1px solid #d7d7d7;
   border-radius: 1rem;
   padding: 0.75rem 1.5rem;
   margin: 1rem -1rem;
-  height: 40px; 
+  height: 40px;
 `;
 
 const Info = styled.div`
@@ -35,19 +35,19 @@ const Info = styled.div`
 
 const Name = styled.span`
   font-weight: 500;
-  color: #3F3F3F;
+  color: #3f3f3f;
   font-size: 0.85em;
 `;
 
 const Price = styled.span`
   font-size: 1rem;
-  color: #208D4E;
+  color: #208d4e;
   font-weight: 600;
 `;
 
 const Controls = styled.div`
   display: flex;
-  align-items: center;  
+  align-items: center;
 `;
 
 const Quantity = styled.span`
@@ -63,7 +63,7 @@ const RemoveButton = styled.button`
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background-color: #67726C;
+  background-color: #67726c;
   color: white;
   font-size: 1rem;
   border: 4px solid white;
@@ -75,13 +75,13 @@ const RemoveButton = styled.button`
 
 const Icon = styled.span`
   position: relative;
-  top: -1px; /* ← 여기로 조절 */
+  top: -1px;
 `;
 
 const ProductItem: React.FC<Props> = ({ product, onQuantityChange, onRemove }) => {
   return (
     <Item>
-      <RemoveButton onClick={() => onRemove(product.id)}><Icon>×</Icon></RemoveButton>
+      <RemoveButton onClick={() => onRemove(product.productId)}><Icon>×</Icon></RemoveButton>
 
       <Info>
         <Name>{product.name}</Name>
@@ -91,7 +91,7 @@ const ProductItem: React.FC<Props> = ({ product, onQuantityChange, onRemove }) =
       <Controls>
   <Button
     variant="minus"
-    onClick={() => onQuantityChange(product.id, -1)}
+    onClick={() => onQuantityChange(product.productId, -1)}
     $active={product.quantity >= 2}
   >
     -
@@ -99,7 +99,7 @@ const ProductItem: React.FC<Props> = ({ product, onQuantityChange, onRemove }) =
   <Quantity>{product.quantity}</Quantity>
   <Button
     variant="plus"
-    onClick={() => onQuantityChange(product.id, 1)}
+    onClick={() => onQuantityChange(product.productId, 1)}
   >
     +
   </Button>

@@ -1,5 +1,3 @@
-import React from "react";
-
 const BarcodeIcon = ({ selected }: { selected: boolean }) => {
   const color = selected ? "#208D4E" : "#000";
 

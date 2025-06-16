@@ -1,7 +1,5 @@
-import React from "react";
-
 const FaceIcon = ({ selected }: { selected: boolean }) => {
-  const color = selected ? "#208D4E" : "#000";  // selected가 true일 때와 false일 때 색상 변경
+  const color = selected ? "#208D4E" : "#000";
 
   return (
     <svg width="40" height="40" viewBox="0 0 118 123" fill="none" xmlns="http://www.w3.org/2000/svg">
