@@ -57,8 +57,6 @@ export default function Cart() {
   const { items, updateQuantity, removeFromCart, clearCart, getTotalPrice, getTotalItems } = useCartStore();
 
   const isProcessingScanRef = useRef(false);
-  const lastScannedBarcodeRef = useRef<string | null>(null);
-  const scanCooldownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [, setScannedBarcode] = useState<string>('');
   const [barcodeInput, setBarcodeInput] = useState<string>('');
   const inputTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -67,17 +65,12 @@ export default function Cart() {
     const onScanSuccess = async (barcode: string) => {
       console.log(`Scanned barcode: ${barcode}`);
 
-      if (isProcessingScanRef.current ||
-          (lastScannedBarcodeRef.current === barcode && scanCooldownTimeoutRef.current)) {
+      if (isProcessingScanRef.current) {
+        console.log('Already processing a scan, ignoring...');
         return;
       }
 
       isProcessingScanRef.current = true;
-      lastScannedBarcodeRef.current = barcode;
-
-      if (scanCooldownTimeoutRef.current) {
-        clearTimeout(scanCooldownTimeoutRef.current);
-      }
 
       try {
         const productDetails = await getProductById(barcode);
@@ -87,25 +80,25 @@ export default function Cart() {
         if (existingItem) {
           if (existingItem.quantity < productDetails.quantity) {
             currentUpdateQuantity(productDetails.id, existingItem.quantity + 1);
+            console.log(`Added ${productDetails.name} to cart. New quantity: ${existingItem.quantity + 1}`);
+          } else {
+            console.log(`Maximum stock reached for ${productDetails.name}`);
           }
         } else {
           currentAddToCart(productDetails.id, productDetails.name, productDetails.price, productDetails.quantity);
+          console.log(`Added new product ${productDetails.name} to cart`);
         }
       } catch (error) {
         console.error(`Error processing barcode ${barcode}:`, error);
       } finally {
-        scanCooldownTimeoutRef.current = setTimeout(() => {
-          scanCooldownTimeoutRef.current = null;
-        }, 2000);
-        isProcessingScanRef.current = false;
+        setTimeout(() => {
+          isProcessingScanRef.current = false;
+        }, 500);
       }
     };
 
-    // 바코드 리더기 키보드 입력 감지
     const handleKeyDown = (event: KeyboardEvent) => {
-      // Enter 키가 아닌 경우 바코드 입력으로 처리
       if (event.key === 'Enter') {
-        // Enter 키를 누르면 바코드 입력 완료
         if (barcodeInput.trim().length > 0) {
           setScannedBarcode(barcodeInput.trim());
           onScanSuccess(barcodeInput.trim());
@@ -132,9 +125,6 @@ export default function Cart() {
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
-      if (scanCooldownTimeoutRef.current) {
-        clearTimeout(scanCooldownTimeoutRef.current);
-      }
       if (inputTimeoutRef.current) {
         clearTimeout(inputTimeoutRef.current);
       }
