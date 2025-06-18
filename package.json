@@ -11,11 +11,9 @@
   },
   "dependencies": {
     "@types/react-webcam": "^3.0.0",
-    "@zxing/library": "^0.21.3",
     "axios": "^1.10.0",
     "classnames": "^2.5.1",
     "face-api.js": "^0.22.2",
-    "html5-qrcode": "^2.3.8",
     "qr-scanner": "^1.4.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

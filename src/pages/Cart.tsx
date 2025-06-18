@@ -6,8 +6,7 @@ import ProductItem from "../components/ProductItem";
 import Footer from "../components/Footer";
 import { useCartStore } from "../store/cart";
 import { getProductById } from '../utils/api';
-import { useEffect, useRef } from 'react';
-import { Html5QrcodeScanner } from 'html5-qrcode';
+import { useEffect, useRef, useState } from 'react';
 
 interface Product {
   productId: string;
@@ -57,16 +56,16 @@ export default function Cart() {
   const navigate = useNavigate();
   const { items, updateQuantity, removeFromCart, clearCart, getTotalPrice, getTotalItems } = useCartStore();
 
-  console.log("Cart items:", items);
-
-  const html5QrcodeScannerRef = useRef<Html5QrcodeScanner | null>(null);
   const isProcessingScanRef = useRef(false);
   const lastScannedBarcodeRef = useRef<string | null>(null);
   const scanCooldownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [, setScannedBarcode] = useState<string>('');
+  const [barcodeInput, setBarcodeInput] = useState<string>('');
+  const inputTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    const onScanSuccess = async (decodedText: string) => {
-      const barcode = decodedText;
+    const onScanSuccess = async (barcode: string) => {
+      console.log(`Scanned barcode: ${barcode}`);
 
       if (isProcessingScanRef.current ||
           (lastScannedBarcodeRef.current === barcode && scanCooldownTimeoutRef.current)) {
@@ -102,39 +101,45 @@ export default function Cart() {
       }
     };
 
-    const onScanFailure = (error: string) => {
+    // 바코드 리더기 키보드 입력 감지
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Enter 키가 아닌 경우 바코드 입력으로 처리
+      if (event.key === 'Enter') {
+        // Enter 키를 누르면 바코드 입력 완료
+        if (barcodeInput.trim().length > 0) {
+          setScannedBarcode(barcodeInput.trim());
+          onScanSuccess(barcodeInput.trim());
+          setBarcodeInput('');
+        }
+      } else if (event.key.length === 1) {
+        setBarcodeInput(prev => prev + event.key);
+        
+        if (inputTimeoutRef.current) {
+          clearTimeout(inputTimeoutRef.current);
+        }
+        
+        inputTimeoutRef.current = setTimeout(() => {
+          if (barcodeInput.length > 5) {
+            setScannedBarcode(barcodeInput);
+            onScanSuccess(barcodeInput);
+            setBarcodeInput('');
+          }
+        }, 100);
+      }
     };
 
-    if (document.getElementById("qr-reader")) {
-      const config = {
-        fps: 10,
-        qrbox: 250,
-        videoConstraints: {
-          facingMode: "environment"
-        },
-        useBarCodeDetectorIfSupported: false
-      };
-      const scanner = new Html5QrcodeScanner(
-        "qr-reader",
-        config,
-        false
-      );
-      html5QrcodeScannerRef.current = scanner;
-      scanner.render(onScanSuccess, onScanFailure);
-    }
+    document.addEventListener('keydown', handleKeyDown);
 
     return () => {
+      document.removeEventListener('keydown', handleKeyDown);
       if (scanCooldownTimeoutRef.current) {
         clearTimeout(scanCooldownTimeoutRef.current);
       }
-      if (html5QrcodeScannerRef.current) {
-        html5QrcodeScannerRef.current.clear().catch(err => {
-          console.error("Failed to clear html5QrcodeScanner: ", err);
-        });
-        html5QrcodeScannerRef.current = null;
+      if (inputTimeoutRef.current) {
+        clearTimeout(inputTimeoutRef.current);
       }
     };
-  }, []);
+  }, [barcodeInput]);
 
   const goToPayment = () => {
     navigate("/payment");
@@ -164,14 +169,13 @@ export default function Cart() {
       <Header />
 
       <CartHeader>
-        <CartTitle>카메라에 바코드를 스캔해주세요</CartTitle>
+        <CartTitle>바코드 리더기로 상품을 스캔해주세요</CartTitle>
         <Button variant="delete" onClick={handleClearAll}>
           상품 전체 삭제
         </Button>
       </CartHeader>
 
       <CartContainer>
-        {/* <div id="qr-reader" style={{ width: '100%', height: '100%' }}></div> */}
         {items.map(product => (
           <ProductWrapper key={product.productId}>
             <ProductItem
