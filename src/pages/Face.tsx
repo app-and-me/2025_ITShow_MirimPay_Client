@@ -72,6 +72,57 @@ const ButtonWrapper = styled.div`
   justify-content: center;
 `
 
+// 모달 스타일
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`
+
+const Modal = styled.div`
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+  width: 90%;
+`
+
+const ModalTitle = styled.h2`
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+`
+
+const ModalMessage = styled.p`
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  line-height: 1.4;
+`
+
+const ModalButton = styled.button`
+  background-color: #008C0E;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: #006A0B;
+  }
+`
+
 export default function Face() {
   const navigate = useNavigate();
   const webcamRef = useRef<Webcam>(null);
@@ -80,6 +131,8 @@ export default function Face() {
 
   const [modelsLoaded, setModelsLoaded] = useState(false);
   const [feedback, setFeedback] = useState('정면을 바라보고 인식을 기다려 주세요!');
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const detectionIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const isCapturingRef = useRef(false);
 
@@ -100,6 +153,16 @@ export default function Face() {
     };
     loadModels();
   }, []);
+
+  const showError = (message: string) => {
+    setErrorMessage(message);
+    setShowErrorModal(true);
+  };
+
+  const handleErrorModalClose = () => {
+    setShowErrorModal(false);
+    navigate('/payment');
+  };
 
   const handleFaceDetectionAndCapture = useCallback(async () => {
     if (isCapturingRef.current || !webcamRef.current || !webcamRef.current.video || !modelsLoaded) {
@@ -138,7 +201,7 @@ export default function Face() {
 
         const imageSrc = webcamRef.current.getScreenshot();
         if (!imageSrc) {
-          setFeedback('캡처 실패. 다시 시도해주세요.');
+          showError('캡처에 실패했습니다. 다시 시도해주세요.');
           isCapturingRef.current = false;
           return;
         }
@@ -174,20 +237,14 @@ export default function Face() {
             navigate('/pin');
           } else {
             console.error('Face recognition failed:', recognitionResponse?.message);
-            setFeedback(recognitionResponse?.message || '얼굴 인식에 실패했습니다. 다시 시도해주세요.');
+            showError('얼굴 인식에 실패했습니다. 다시 시도해주세요.');
             setPaymentDetails({ paymentType: null, user: null, confidence: null });
             localStorage.removeItem('faceImage');
             isCapturingRef.current = false;
-            if (!detectionIntervalRef.current && modelsLoaded) {
-              detectionIntervalRef.current = setInterval(() => {
-                handleFaceDetectionAndCapture();
-              }, 1000);
-            }
           }
         } catch (err) {
           console.error('Face recognition or payment setup failed:', err);
-          setFeedback('오류 발생. 다시 시도해주세요.');
-          navigate('/');
+          showError('오류가 발생했습니다. 다시 시도해주세요.');
           setPaymentDetails({ paymentType: null });
           localStorage.removeItem('faceImage');
           isCapturingRef.current = false;
@@ -244,6 +301,18 @@ export default function Face() {
           <Button onClick={goBack}>취소</Button>
         </ButtonWrapper>
       </Container>
+
+      {showErrorModal && (
+        <ModalOverlay>
+          <Modal>
+            <ModalTitle>인식 실패</ModalTitle>
+            <ModalMessage>{errorMessage}</ModalMessage>
+            <ModalButton onClick={handleErrorModalClose}>
+              확인
+            </ModalButton>
+          </Modal>
+        </ModalOverlay>
+      )}
     </>
   )
 }
