@@ -56,7 +56,7 @@ const ButtonWrapper = styled.div`
     display: flex;
     justify-content: center;
     z-index: 1;
-    
+    margin-bottom: 100px;
     @media (max-width: 768px) {
         padding: 2rem 1rem;
         padding-bottom: max(2rem, env(safe-area-inset-bottom));
@@ -71,9 +71,11 @@ const Button = styled.button`
     font-size: 1.25rem;
     font-weight: 600;
     color: white;
+    height: 70px;
+    width: 250px;
     background-color: transparent;
     border: 2px solid white;
-    border-radius: 9999px;
+    border-radius: 100px;
     padding: 1rem 3rem;
     cursor: pointer;
     transition: all 0.3s;
