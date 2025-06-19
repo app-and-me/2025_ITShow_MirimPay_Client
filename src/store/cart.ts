@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-// import { persist, createJSONStorage } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 interface CartState {
   items: Array<{ productId: string; quantity: number; name: string; price: number; stock?: number }>;
@@ -12,7 +12,7 @@ interface CartState {
 }
 
 export const useCartStore = create<CartState>()(
-  // persist(
+  persist(
     (set, get) => ({
       items: [
         // { productId: "8801019602498", quantity: 1, name: "구운감자", price: 1100, stock: 10 },
@@ -53,9 +53,9 @@ export const useCartStore = create<CartState>()(
         return get().items.reduce((total, item) => total + item.quantity, 0);
       }
     }),
-    // {
-    //   name: 'cart-storage',
-    //   storage: createJSONStorage(() => localStorage),
-    // }
-  // )
+    {
+      name: 'cart-storage',
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
 );

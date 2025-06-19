@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
+import { useNavigate } from 'react-router-dom';
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -29,9 +30,10 @@ const Logo = styled.img`
 `;
 
 const Header: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <HeaderContainer>
-      <Logo src={logo} alt="Logo" />
+      <Logo onClick={() => navigate('/main')} src={logo} alt="Logo" />
     </HeaderContainer>
   );
 };

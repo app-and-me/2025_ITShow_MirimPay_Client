@@ -168,11 +168,11 @@ export default function Pay() {
   return (
     <>
       <PayContainer>
-        <HiddenVideo ref={videoRef}></HiddenVideo>
         <Title>QR 코드 스캔중</Title>
-        <ImgWrapper>
+        <HiddenVideo ref={videoRef}></HiddenVideo>
+        {/* <ImgWrapper>
           <Barcode src={barcondeimg} alt="로고" />
-        </ImgWrapper>
+        </ImgWrapper> */}
         <SubTitle>웹캠 카메라 부분에<br></br>QR 코드를 스캔해주세요!</SubTitle>
         {scanError && <SubTitle style={{ color: 'red', fontSize: '1.5rem' }}>{scanError}</SubTitle>}
         <Wrapper>
