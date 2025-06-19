@@ -35,8 +35,13 @@ interface PaymentQrPayload {
 }
 
 interface PaymentQrResponse {
-  orderId: string;
-  qrCodeUrl?: string; 
+  paymentData: {
+    orderId: string;
+    amount: number;
+    orderName: string;
+    timestamp: number;
+  }
+  success: boolean;
 }
 
 export const postUserPaymentQr = async (payload: PaymentQrPayload): Promise<PaymentQrResponse> => {
@@ -45,7 +50,7 @@ export const postUserPaymentQr = async (payload: PaymentQrPayload): Promise<Paym
 };
 
 export const getUserMe = async (accessToken: string) => {
-  const response = await apiClient.get('/user/me', {
+  const response = await apiClient.get('/users/me', {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
   return response.data;
