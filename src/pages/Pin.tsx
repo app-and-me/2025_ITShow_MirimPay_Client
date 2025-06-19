@@ -224,12 +224,12 @@ const Pin: React.FC = () => {
     <>
       <PinContainer>
         <Title>결제 비밀번호 입력</Title>
-        <Barcode 
-          src={paymentDetails.paymentType === 'face' && faceImageRef.current ? faceImageRef.current : Pinimg} 
+        {paymentDetails.accessToken == 'face' && <Barcode 
+          src={faceImageRef.current ? faceImageRef.current : Pinimg} 
           alt={paymentDetails.paymentType === 'face' ? '캡처된 얼굴 이미지' : '결제수단 기본 이미지'} 
-        />
+        />}
         <User_name>
-          {paymentDetails.paymentType === 'face' && paymentDetails.user?.nickname 
+          {paymentDetails.paymentType && paymentDetails.user?.nickname 
             ? paymentDetails.user.nickname 
             : '고객님'}
         </User_name>
