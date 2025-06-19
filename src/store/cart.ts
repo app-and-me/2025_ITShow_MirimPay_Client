@@ -16,7 +16,7 @@ export const useCartStore = create<CartState>()(
     (set, get) => ({
       items: [
         // { productId: "8801019602498", quantity: 1, name: "구운감자", price: 1100, stock: 10 },
-        // { productId: "8801117365103", quantity: 2, name: "리찌 알맹이", price: 1300, stock: 32 },
+        // { productId: "8801117365103", quantity: 1, name: "리찌 알맹이", price: 1300, stock: 32 },
         // { productId: "8801117674700", quantity: 5, name: "치킨팝 닭강정맛", price: 1200, stock: 30 },
         // { productId: "8801117158118", quantity: 1, name: "비쵸비 5개입", price: 4000, stock: 16 }
       ],

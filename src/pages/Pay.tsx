@@ -39,9 +39,7 @@ const HiddenVideo = styled.video`
   position: absolute;
   left: -9999px;
   top: -9999px;
-  width: 1px;
-  height: 1px;
-  visibility: hidden;
+  /* visibility: hidden; */
 `;
 
 const SubTitle = styled.div`
@@ -98,9 +96,6 @@ export default function Pay() {
       videoRef.current,
       async (result) => {
         qrScanner.stop();
-        if (audioRef.current) {
-          audioRef.current.play().catch(e => console.error("Error playing beep:", e));
-        }
         try {
           const qrData = JSON.parse(result.data);
           const { customerKey, billingKey, accessToken } = qrData;
@@ -122,11 +117,11 @@ export default function Pay() {
             amount: totalPrice,
             orderName: orderName,
           });
-
+          
           const user = await getUserMe(accessToken);
 
           setPaymentDetails({
-            orderId: paymentInitResponse.orderId,
+            orderId: paymentInitResponse.paymentData.orderId,
             amount: totalPrice,
             orderName: orderName,
             customerKey,
