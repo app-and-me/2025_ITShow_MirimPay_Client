@@ -35,11 +35,22 @@ const Barcode = styled.img`
   display: block;
 `
 
-const HiddenVideo = styled.video`
-  /* position: absolute;
-  left: -9999px;
-  top: -9999px; */
-  /* visibility: hidden; */
+const VideoContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+`;
+
+const Video = styled.video`
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  border: 2px solid white;
+  object-fit: cover;
+  background-color: #000;
 `;
 
 const SubTitle = styled.div`
@@ -169,7 +180,9 @@ export default function Pay() {
     <>
       <PayContainer>
         <Title>QR 코드 스캔중</Title>
-        <HiddenVideo ref={videoRef}></HiddenVideo>
+        <VideoContainer>
+          <Video ref={videoRef}></Video>
+        </VideoContainer>
         {/* <ImgWrapper>
           <Barcode src={barcondeimg} alt="로고" />
         </ImgWrapper> */}
