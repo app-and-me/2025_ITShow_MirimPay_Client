@@ -12,8 +12,8 @@ const PayContainer = styled.div`
   padding-bottom: 15rem;
   margin: 0 auto;
   background-color: #008C0E;
-  height: 100vh; 
-`
+  height: 100vh;
+`;
 
 const Title = styled.p`
   text-align: center;
@@ -21,19 +21,7 @@ const Title = styled.p`
   color: white;
   -webkit-text-stroke: 0.8px white;
   margin-top: 80px;
-`
-const ImgWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
-const Barcode = styled.img`
-  padding-top: 5rem;
-  padding-bottom: 2rem;
-  max-width: 25rem;
-  display: block;
-`
+`;
 
 const VideoContainer = styled.div`
   display: flex;
@@ -44,13 +32,14 @@ const VideoContainer = styled.div`
 
 const Video = styled.video`
   width: 100%;
-  max-width: 400px;
+  max-width: 300px;
   height: auto;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 4;
   border-radius: 12px;
   border: 2px solid white;
   object-fit: cover;
   background-color: #000;
+  display: block;
 `;
 
 const SubTitle = styled.div`
@@ -59,15 +48,17 @@ const SubTitle = styled.div`
   font-size: 2rem;
   color: white;
   -webkit-text-stroke: 0.8px white;
-`
+`;
+
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+  flex-direction: column;
+`;
+
 const Button = styled.div`
-  margin: 40px auto 0 auto; 
-  margin-top: 40px;
+  margin: 40px auto 0 auto;
   width: 250px;
   height: 60px;
   border-radius: 12px;
@@ -79,29 +70,30 @@ const Button = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
-
+`;
 
 export default function Pay() {
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
   const qrScannerRef = useRef<QrScanner | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
   const [scanError, setScanError] = useState<string | null>(null);
+  const [cameras, setCameras] = useState<MediaDeviceInfo[]>([]);
+  const [selectedDeviceId, setSelectedDeviceId] = useState<string | null>(null);
 
   const cart = useCartStore();
   const { setPaymentDetails } = usePaymentStore();
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      audioRef.current = new Audio('/sounds/beep.mp3');
-    }
+    QrScanner.listCameras(true).then((devices) => {
+      setCameras(devices);
+      if (devices.length > 0) {
+        setSelectedDeviceId(devices[0].id);
+      }
+    });
   }, []);
 
   useEffect(() => {
-    if (!videoRef.current) {
-      return;
-    }
+    if (!videoRef.current || !selectedDeviceId) return;
 
     const qrScanner = new QrScanner(
       videoRef.current,
@@ -123,7 +115,7 @@ export default function Pay() {
           if (items.length > 0) {
             orderName = items.length > 1 ? `${items[0].name} 외 ${items.length - 1}건` : items[0].name;
           }
-          
+
           const paymentInitResponse = await postUserPaymentQr({
             amount: totalPrice,
             orderName: orderName,
@@ -149,15 +141,20 @@ export default function Pay() {
         }
       },
       {
+        preferredCamera: selectedDeviceId,
         highlightScanRegion: true,
         highlightCodeOutline: true,
-        preferredCamera: 'environment',
+        maxScansPerSecond: 10,
+        calculateScanRegion: undefined,
+        constraints: {
+          advanced: [{ focusMode: 'continuous' }]
+        },
       }
     );
 
     qrScannerRef.current = qrScanner;
 
-    qrScanner.start().catch(err => {
+    qrScanner.start().catch((err) => {
       console.error('Error starting QR scanner:', err);
       setScanError('Could not start QR scanner. Please check camera permissions.');
     });
@@ -167,7 +164,7 @@ export default function Pay() {
       qrScanner.destroy();
       qrScannerRef.current = null;
     };
-  }, [navigate, cart, setPaymentDetails]);
+  }, [selectedDeviceId, cart, navigate, setPaymentDetails]);
 
   const goBack = () => {
     if (qrScannerRef.current) {
@@ -177,21 +174,45 @@ export default function Pay() {
   };
 
   return (
-    <>
-      <PayContainer>
-        <Title>QR 코드 스캔중</Title>
-        <VideoContainer>
-          <Video ref={videoRef}></Video>
-        </VideoContainer>
-        {/* <ImgWrapper>
-          <Barcode src={barcondeimg} alt="로고" />
-        </ImgWrapper> */}
-        <SubTitle>웹캠 카메라 부분에<br></br>QR 코드를 스캔해주세요!</SubTitle>
-        {scanError && <SubTitle style={{ color: 'red', fontSize: '1.5rem' }}>{scanError}</SubTitle>}
-        <Wrapper>
-          <Button onClick={goBack}>취소</Button>
-        </Wrapper>
-      </PayContainer>
-    </>
-  )
+    <PayContainer>
+      <Title>QR 코드 스캔중</Title>
+      <VideoContainer>
+        <Video ref={videoRef} autoPlay playsInline muted controls={false} />
+      </VideoContainer>
+
+      <Wrapper>
+        <select
+          value={selectedDeviceId || ''}
+          onChange={(e) => setSelectedDeviceId(e.target.value)}
+          style={{
+            marginTop: '1rem',
+            fontSize: '1rem',
+            padding: '0.5rem',
+            borderRadius: '8px',
+          }}
+        >
+          {cameras.map((cam) => (
+            <option key={cam.id} value={cam.id}>
+              {cam.label || `Camera ${cam.id}`}
+            </option>
+          ))}
+        </select>
+      </Wrapper>
+
+      <SubTitle>
+        웹캠 카메라 부분에<br />
+        QR 코드를 스캔해주세요!
+      </SubTitle>
+
+      {scanError && (
+        <SubTitle style={{ color: 'red', fontSize: '1.5rem' }}>
+          {scanError}
+        </SubTitle>
+      )}
+
+      <Wrapper>
+        <Button onClick={goBack}>취소</Button>
+      </Wrapper>
+    </PayContainer>
+  );
 }
