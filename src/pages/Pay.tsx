@@ -36,9 +36,9 @@ const Barcode = styled.img`
 `
 
 const HiddenVideo = styled.video`
-  position: absolute;
+  /* position: absolute;
   left: -9999px;
-  top: -9999px;
+  top: -9999px; */
   /* visibility: hidden; */
 `;
 
@@ -117,7 +117,7 @@ export default function Pay() {
             amount: totalPrice,
             orderName: orderName,
           });
-          
+
           const user = await getUserMe(accessToken);
 
           setPaymentDetails({
